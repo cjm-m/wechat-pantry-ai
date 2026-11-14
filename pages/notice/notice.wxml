@@ -1,0 +1,43 @@
+<view class="page">
+    <view class="center-box" wx:if="{{authState === 'checking'}}">
+        <view class="skeleton loading-line"></view>
+    </view>
+
+    <block wx:if="{{authState === 'ready'}}">
+        <view class="head">
+            <text class="head-count">{{unread > 0 ? unread + ' 条未读' : '全部已读'}}</text>
+            <text class="head-action" wx:if="{{unread > 0}}" bindtap="onMarkAll">{{marking ? '处理中…' : '全部已读'}}</text>
+        </view>
+
+        <view class="error-box" wx:if="{{error}}">{{error}}</view>
+
+        <view class="empty" wx:if="{{!loading && items.length === 0}}">
+            <view class="empty-icon">🔔</view>
+            <view class="empty-title">还没有消息</view>
+            <view class="empty-desc">食材快到期、TA 动了冰箱，都会出现在这里</view>
+        </view>
+
+        <view class="notice-list" wx:else>
+            <view
+                class="notice {{item.unread ? 'is-unread' : ''}}"
+                wx:for="{{items}}"
+                wx:key="id"
+                data-index="{{index}}"
+                bindtap="onTapItem"
+            >
+                <view class="notice-icon">{{item.icon}}</view>
+                <view class="grow">
+                    <view class="notice-top">
+                        <text class="notice-label">{{item.label}}</text>
+                        <text class="notice-time">{{item.timeText}}</text>
+                    </view>
+                    <view class="notice-title">{{item.title}}</view>
+                    <view class="notice-body" wx:if="{{item.body}}">{{item.body}}</view>
+                </view>
+                <view class="dot" wx:if="{{item.unread}}"></view>
+            </view>
+        </view>
+
+        <view class="footer-note" wx:if="{{items.length > 0}}">点一条消息可以直接跳过去看。</view>
+    </block>
+</view>

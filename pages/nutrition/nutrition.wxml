@@ -1,0 +1,60 @@
+<view class="page">
+    <view class="center-box" wx:if="{{authState === 'checking'}}">
+        <view class="skeleton loading-line"></view>
+    </view>
+
+    <block wx:if="{{authState === 'ready'}}">
+        <view class="error-box" wx:if="{{error}}">{{error}}</view>
+
+        <!-- 今日：环形用 conic-gradient，低版本降级成纯色背景但数字仍可读 -->
+        <view class="card today-card">
+            <view class="today-title">今天</view>
+            <view class="ring" style="{{ringStyle}}">
+                <view class="ring-hole">
+                    <view class="ring-num">{{today.kcal}}</view>
+                    <view class="ring-unit">千卡</view>
+                </view>
+            </view>
+            <view class="today-goal">目标约 {{goalKcal}} 千卡 · 已完成 {{ringPercent}}%</view>
+            <view class="today-meals" wx:if="{{today.meals > 0}}">
+                {{today.meals}} 餐，其中 {{today.estimated}} 餐有估算
+            </view>
+            <view class="today-meals" wx:else>今天还没打卡</view>
+        </view>
+
+        <!-- 三大营养素 -->
+        <view class="card">
+            <view class="sub-title">三大营养素</view>
+            <view class="macro-row" wx:for="{{macros}}" wx:key="key">
+                <view class="macro-head">
+                    <text class="macro-label">{{item.label}}</text>
+                    <text class="macro-value">{{item.value}}{{item.unit}} / {{item.goal}}{{item.unit}}</text>
+                </view>
+                <view class="macro-track">
+                    <view class="macro-fill" style="{{item.style}}"></view>
+                </view>
+            </view>
+        </view>
+
+        <!-- 近 7 天趋势 -->
+        <view class="card">
+            <view class="sub-title">近 7 天</view>
+            <view class="bars">
+                <view class="bar-col" wx:for="{{bars}}" wx:key="day">
+                    <view class="bar-slot">
+                        <view class="bar {{item.empty ? 'is-empty' : ''}}" style="{{item.style}}"></view>
+                    </view>
+                    <view class="bar-label">{{item.label}}</view>
+                </view>
+            </view>
+        </view>
+
+        <!-- 总结：缺估算的餐必须明说，否则总量会被误读成全部摄入 -->
+        <view class="card note-card" wx:if="{{summary}}">
+            <view class="note-text">{{summary.text}}</view>
+            <view class="note-hint">营养由模型按用料粗估，只能看趋势，不能当营养标签。</view>
+        </view>
+
+        <view class="btn btn-ghost btn-small" bindtap="onGoConsumption">看消耗记录 ›</view>
+    </block>
+</view>

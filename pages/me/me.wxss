@@ -1,0 +1,69 @@
+.loading-line {
+    width: 100%;
+}
+
+.hero-icon {
+    font-size: 60rpx;
+    line-height: 1;
+}
+
+.section-card {
+    margin-top: 28rpx;
+}
+
+.section-label {
+    font-size: 24rpx;
+    color: var(--muted);
+    letter-spacing: 1rpx;
+    margin-bottom: 12rpx;
+}
+
+.code-row {
+    align-items: center;
+}
+
+.invite-code {
+    font-size: 52rpx;
+    font-weight: 600;
+    letter-spacing: 10rpx;
+    color: var(--primary-dark);
+}
+
+.code-tip {
+    margin-top: 16rpx;
+    line-height: 1.6;
+}
+
+.avatar {
+    width: 64rpx;
+    height: 64rpx;
+    border-radius: 32rpx;
+    background: var(--primary-soft);
+    color: var(--primary-dark);
+    font-size: 24rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 20rpx;
+}
+
+.account-line {
+    font-size: 28rpx;
+    color: var(--text);
+    word-break: break-all;
+}
+
+.signout {
+    margin-top: 48rpx;
+    text-align: center;
+    font-size: 28rpx;
+    color: #C0392B;
+    padding: 20rpx;
+}
+
+.footer-note {
+    margin-top: 20rpx;
+    text-align: center;
+    font-size: 22rpx;
+    color: #C6BBAF;
+}

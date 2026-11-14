@@ -1,0 +1,32 @@
+# ---- 本地私有配置（含真实域名 / AppID / 模板 ID，绝不入库）----
+# 用法：cp utils/local-config.example.js utils/local-config.js 后填自己的值
+utils/local-config.js
+
+# ---- 依赖 ----
+node_modules/
+
+# ---- 微信开发者工具的个人配置（每人不同，不共享）----
+project.private.config.json
+
+# ---- 中小程序包无关的目录（只在本仓做文档与源码管理）----
+# 这些目录不会被打进小程序包（见 project.config.json 的 packOptions.ignore）
+
+# ---- 环境变量与密钥 ----
+# 真实密钥只应存在于部署服务器（权限 600），仓库里只允许出现 *.env.example 模板
+*.env
+.env
+.env.*
+!*.env.example
+
+# ---- 备份 / 临时 / 测试产物 ----
+*.bak
+*.bak.*
+*.log
+sqlite-*.db
+coverage/
+.nyc_output/
+
+# ---- 系统垃圾 ----
+.DS_Store
+Thumbs.db
+desktop.ini

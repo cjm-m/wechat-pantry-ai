@@ -1,0 +1,28 @@
+{
+  "name": "wechat-pantry-ai",
+  "version": "1.0.0",
+  "description": "双人共享冰箱 + AI 配菜的微信小程序（原生 + Node.js + PostgreSQL）",
+  "main": "app.js",
+  "scripts": {
+    "test": "bash ops/probes-offline.sh",
+    "probes": "bash ops/probes-offline.sh",
+    "check": "node -e \"require('./utils/config'); require('./utils/model-config'); console.log('配置加载 OK')\""
+  },
+  "keywords": [
+    "wechat",
+    "miniprogram",
+    "llm",
+    "agent",
+    "postgresql",
+    "postgrest"
+  ],
+  "author": "cjm",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cjm-m/wechat-pantry-ai.git"
+  },
+  "dependencies": {
+    "@tencent-ai/workbuddy-cloud-sdk": "^0.1.4-dev.ca27990.202610161713"
+  }
+}

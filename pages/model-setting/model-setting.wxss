@@ -1,0 +1,97 @@
+.loading-line {
+    width: 100%;
+}
+
+.status-card {
+    margin-top: 20rpx;
+}
+
+.policy-note {
+    font-size: 24rpx;
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+.retry-btn {
+    margin-top: 20rpx;
+}
+
+.group-head {
+    padding-bottom: 8rpx;
+}
+
+.group-title {
+    font-size: 30rpx;
+}
+
+.model-item {
+    align-items: flex-start;
+}
+
+.model-name {
+    font-size: 28rpx;
+    word-break: break-all;
+}
+
+.model-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 10rpx;
+}
+
+.model-meta .tag {
+    margin-right: 10rpx;
+}
+
+/* 选中态放在行尾的胶囊开关上，替代原来行首的圆形勾选。
+   纯展示元素：点击由整行 .model-item 的 bindtap 接管，这里刻意不绑事件。 */
+.pick-switch {
+    flex: 0 0 auto;
+    width: 92rpx;
+    height: 52rpx;
+    margin-left: 20rpx;
+    margin-top: 2rpx;
+    padding: 4rpx;
+    box-sizing: border-box;
+    border-radius: 26rpx;
+    background: #F2ECE4;
+    border: 2rpx solid #E4D9CB;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.18s ease, border-color 0.18s ease;
+}
+
+.pick-switch .pick-knob {
+    width: 40rpx;
+    height: 40rpx;
+    border-radius: 20rpx;
+    background: #FFFFFF;
+    box-shadow: 0 2rpx 6rpx rgba(140, 120, 100, 0.18);
+    transform: translateX(0);
+    transition: transform 0.18s ease;
+}
+
+.pick-switch-on {
+    background: var(--primary);
+    border-color: var(--primary);
+}
+
+.pick-switch-on .pick-knob {
+    transform: translateX(40rpx);
+}
+
+.empty-line {
+    padding: 20rpx 0 8rpx;
+    font-size: 24rpx;
+    color: #C6BBAF;
+}
+
+.footer-note {
+    margin-top: 36rpx;
+    text-align: center;
+    font-size: 22rpx;
+    color: #C6BBAF;
+    line-height: 1.6;
+    padding: 0 20rpx;
+}

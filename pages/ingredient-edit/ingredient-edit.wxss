@@ -1,0 +1,38 @@
+.loading-line {
+    width: 100%;
+}
+
+.picker-arrow {
+    margin-left: 12rpx;
+    color: #C6BBAF;
+}
+
+.unit-chips {
+    margin-top: 16rpx;
+}
+
+.chip-on {
+    background: var(--primary-soft);
+    border-color: #F6C7B2;
+    color: var(--primary-dark);
+}
+
+.save-btn {
+    margin-top: 36rpx;
+}
+
+.delete-btn {
+    margin-top: 40rpx;
+    text-align: center;
+    font-size: 26rpx;
+    color: #C0392B;
+    padding: 16rpx;
+}
+
+.cart-btn {
+    margin-top: 24rpx;
+    text-align: center;
+    font-size: 26rpx;
+    color: var(--primary);
+    padding: 16rpx;
+}

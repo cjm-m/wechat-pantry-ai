@@ -1,0 +1,9 @@
+# 微信开发者工具的个人配置覆盖（不共享）
+# 每个开发者本机不同，已在 .gitignore 里忽略
+{
+  "description": "本地开发覆盖配置",
+  "setting": {
+    "urlCheck": false,
+    "compileHotReLoad": true
+  }
+}

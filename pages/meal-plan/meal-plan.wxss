@@ -1,0 +1,424 @@
+/* 这周吃什么（N9）。全局样式在 app.wxss，这里只写本页特有的：
+   周网格、加菜弹层、做完确认弹层。 */
+
+/* ---------- 周导航 ---------- */
+
+.week-card {
+    padding: 24rpx 20rpx;
+}
+
+.week-arrow {
+    width: 72rpx;
+    height: 72rpx;
+    line-height: 68rpx;
+    text-align: center;
+    font-size: 44rpx;
+    color: var(--primary);
+    border-radius: 36rpx;
+}
+
+.week-arrow.is-off {
+    color: #D8CEC4;
+}
+
+.week-center {
+    flex: 1;
+    text-align: center;
+}
+
+.week-title {
+    font-size: 32rpx;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.week-sub {
+    margin-top: 4rpx;
+    font-size: 24rpx;
+    color: var(--muted);
+}
+
+.week-stat {
+    margin-top: 16rpx;
+    padding-top: 16rpx;
+    border-top: 2rpx solid var(--line);
+    text-align: center;
+    font-size: 24rpx;
+    color: var(--muted);
+}
+
+/* ---------- 周网格 ---------- */
+
+.grid-card {
+    padding: 16rpx 12rpx;
+    overflow-x: auto;
+}
+
+.grid-head {
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 10rpx;
+    border-bottom: 2rpx solid var(--line);
+}
+
+.grid-corner {
+    width: 68rpx;
+    flex: 0 0 68rpx;
+}
+
+.grid-day {
+    flex: 1;
+    min-width: 0;
+    text-align: center;
+}
+
+.grid-day-label {
+    font-size: 24rpx;
+    color: var(--text);
+}
+
+.grid-day-label.is-today {
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.grid-day-date {
+    font-size: 20rpx;
+    color: var(--muted);
+    transform: scale(0.92);
+}
+
+.grid-row {
+    display: flex;
+    align-items: stretch;
+    border-bottom: 2rpx solid var(--line);
+}
+
+.grid-row:last-child {
+    border-bottom: none;
+}
+
+.grid-slot {
+    width: 68rpx;
+    flex: 0 0 68rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22rpx;
+    color: var(--muted);
+}
+
+.grid-cell {
+    flex: 1;
+    min-width: 0;
+    min-height: 88rpx;
+    margin: 4rpx 3rpx;
+    border-radius: 12rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 6rpx 4rpx;
+}
+
+.cell-plus {
+    font-size: 32rpx;
+    color: #D8CEC4;
+}
+
+.cell-dish {
+    font-size: 20rpx;
+    line-height: 1.25;
+    color: var(--text);
+    text-align: center;
+    word-break: break-all;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+.cell-dish.is-cooked {
+    color: var(--muted);
+    text-decoration: line-through;
+}
+
+.cell-mark {
+    position: absolute;
+    right: 2rpx;
+    top: 0;
+    font-size: 18rpx;
+    color: var(--ok);
+}
+
+/* ---------- 缺料 ---------- */
+
+.shortage-card {
+    padding: 24rpx;
+}
+
+.shortage-title {
+    margin-top: 6rpx;
+    font-size: 32rpx;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.shortage-ok {
+    color: var(--ok);
+    font-weight: 400;
+    font-size: 28rpx;
+}
+
+.shortage-group {
+    margin-top: 20rpx;
+}
+
+.shortage-label {
+    font-size: 22rpx;
+    color: var(--muted);
+    margin-bottom: 8rpx;
+}
+
+.shortage-item {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 6rpx;
+    margin: 0 12rpx 10rpx 0;
+    padding: 8rpx 18rpx;
+    border-radius: 999rpx;
+    background: var(--primary-soft);
+    color: var(--primary-dark);
+    font-size: 26rpx;
+}
+
+.shortage-item.maybe {
+    background: var(--warn-soft);
+    color: #8A5A14;
+}
+
+.shortage-amount {
+    font-size: 20rpx;
+    opacity: 0.7;
+}
+
+.shortage-actions {
+    margin-top: 24rpx;
+    display: flex;
+    gap: 16rpx;
+}
+
+.shortage-note {
+    margin-top: 16rpx;
+    font-size: 22rpx;
+    color: var(--muted);
+    line-height: 1.5;
+}
+
+/* ---------- 弹层（加菜 / 做完） ---------- */
+
+.mask {
+    position: fixed;
+    inset: 0;
+    background: rgba(46, 42, 38, 0.45);
+    z-index: 100;
+    display: flex;
+    align-items: flex-end;
+}
+
+.sheet {
+    width: 100%;
+    max-height: 82vh;
+    background: var(--card);
+    border-radius: 28rpx 28rpx 0 0;
+    padding: 24rpx 28rpx calc(28rpx + env(safe-area-inset-bottom));
+    display: flex;
+    flex-direction: column;
+}
+
+.sheet-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 0 0 auto;
+}
+
+.sheet-title {
+    font-size: 32rpx;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.sheet-close {
+    width: 56rpx;
+    height: 56rpx;
+    line-height: 52rpx;
+    text-align: center;
+    font-size: 40rpx;
+    color: var(--muted);
+}
+
+/* ---------- 加菜弹层内 ---------- */
+
+.tabs {
+    display: flex;
+    gap: 12rpx;
+    margin: 20rpx 0 8rpx;
+    flex: 0 0 auto;
+}
+
+.tab {
+    flex: 1;
+    padding: 14rpx 0;
+    text-align: center;
+    font-size: 26rpx;
+    color: var(--muted);
+    border-radius: 14rpx;
+    background: #F7F1EA;
+}
+
+.tab.is-on {
+    background: var(--primary-soft);
+    color: var(--primary-dark);
+    font-weight: 600;
+}
+
+.sheet-body {
+    flex: 1;
+    min-height: 200rpx;
+    max-height: 56vh;
+    overflow: hidden;
+}
+
+.pick-row {
+    display: flex;
+    align-items: center;
+    gap: 20rpx;
+    padding: 22rpx 0;
+    border-bottom: 2rpx solid var(--line);
+}
+
+.pick-row:last-child {
+    border-bottom: none;
+}
+
+.pick-title {
+    font-size: 28rpx;
+    color: var(--text);
+}
+
+.pick-reason {
+    margin-top: 4rpx;
+    font-size: 22rpx;
+    color: var(--muted);
+}
+
+.pick-add {
+    flex: 0 0 auto;
+    padding: 8rpx 22rpx;
+    border-radius: 999rpx;
+    background: var(--primary);
+    color: #FFFFFF;
+    font-size: 24rpx;
+}
+
+.ai-hint {
+    padding: 12rpx 0 20rpx;
+    font-size: 26rpx;
+    color: var(--muted);
+}
+
+.ai-btn {
+    margin-bottom: 16rpx;
+}
+
+.ai-loading {
+    padding: 20rpx 0;
+}
+
+.ai-line {
+    height: 24rpx;
+    margin-bottom: 12rpx;
+}
+
+.ai-line.short {
+    width: 60%;
+}
+
+.manual-input {
+    margin-top: 20rpx;
+    width: 100%;
+    height: 88rpx;
+    line-height: 88rpx;
+    padding: 0 24rpx;
+    border-radius: 16rpx;
+    background: #F7F1EA;
+    font-size: 28rpx;
+}
+
+.manual-actions {
+    margin-top: 24rpx;
+    display: flex;
+    gap: 16rpx;
+}
+
+.manual-note {
+    margin-top: 16rpx;
+    font-size: 22rpx;
+    color: var(--muted);
+    line-height: 1.5;
+}
+
+/* ---------- 做完确认弹层内 ---------- */
+
+.cook-intro {
+    margin: 20rpx 0 8rpx;
+    font-size: 24rpx;
+    color: var(--muted);
+}
+
+.cook-row {
+    display: flex;
+    align-items: center;
+    gap: 20rpx;
+    padding: 20rpx 0;
+    border-bottom: 2rpx solid var(--line);
+}
+
+.cook-row:last-of-type {
+    border-bottom: none;
+}
+
+.cook-name {
+    font-size: 28rpx;
+    color: var(--text);
+}
+
+.cook-name.is-checked {
+    color: var(--muted);
+    text-decoration: line-through;
+}
+
+.cook-note {
+    margin-top: 4rpx;
+    font-size: 22rpx;
+    color: var(--muted);
+}
+
+.cook-empty {
+    padding: 40rpx 0;
+    text-align: center;
+    font-size: 26rpx;
+    color: var(--muted);
+}
+
+.cook-actions {
+    margin-top: 24rpx;
+    display: flex;
+    gap: 16rpx;
+    flex: 0 0 auto;
+}
+
+.check.is-disabled {
+    opacity: 0.35;
+}

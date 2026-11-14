@@ -1,0 +1,82 @@
+/* 消耗记录（M4）。列表本身用全局 .card / .tag，这里只加时间线样式。 */
+
+.summary-card {
+    padding: 32rpx;
+    text-align: center;
+}
+
+.summary-num {
+    font-size: 64rpx;
+    font-weight: 600;
+    color: var(--primary);
+    line-height: 1.1;
+}
+
+.summary-label {
+    margin-top: 8rpx;
+    font-size: 24rpx;
+    color: var(--muted);
+}
+
+.log-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 18rpx;
+    padding: 24rpx 0;
+    border-bottom: 2rpx solid var(--line);
+}
+
+.log-row:last-child {
+    border-bottom: none;
+}
+
+.log-dot {
+    width: 12rpx;
+    height: 12rpx;
+    flex: 0 0 12rpx;
+    margin-top: 16rpx;
+    border-radius: 6rpx;
+    background: var(--primary);
+}
+
+.log-title {
+    font-size: 28rpx;
+    color: var(--text);
+}
+
+.log-names {
+    margin-top: 6rpx;
+    font-size: 24rpx;
+    color: var(--muted);
+    line-height: 1.5;
+}
+
+.log-meta {
+    margin-top: 10rpx;
+    display: flex;
+    align-items: center;
+    gap: 14rpx;
+}
+
+.log-time {
+    font-size: 22rpx;
+    color: var(--muted);
+}
+
+.log-count {
+    flex: 0 0 auto;
+    min-width: 56rpx;
+    height: 56rpx;
+    line-height: 56rpx;
+    text-align: center;
+    border-radius: 28rpx;
+    background: var(--primary-soft);
+    color: var(--primary-dark);
+    font-size: 26rpx;
+}
+
+.summary-link {
+    margin-top: 16rpx;
+    font-size: 24rpx;
+    color: var(--primary);
+}

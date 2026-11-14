@@ -1,0 +1,130 @@
+.loading-line {
+    width: 100%;
+}
+
+.detail-title {
+    font-size: 42rpx;
+    font-weight: 600;
+}
+
+.detail-summary {
+    margin-top: 10rpx;
+    font-size: 27rpx;
+    color: var(--muted);
+}
+
+.detail-meta {
+    margin-top: 18rpx;
+    font-size: 24rpx;
+    color: #B3A79B;
+}
+
+.dot {
+    margin: 0 10rpx;
+}
+
+.sub-title {
+    margin-bottom: 8rpx;
+    font-size: 24rpx;
+    color: var(--muted);
+    letter-spacing: 1rpx;
+}
+
+.used-item {
+    display: flex;
+    align-items: center;
+    padding: 10rpx 0;
+}
+
+.used-name {
+    font-size: 28rpx;
+}
+
+.used-amount {
+    margin-left: 12rpx;
+    font-size: 24rpx;
+    color: var(--muted);
+    flex: 1;
+}
+
+.step {
+    display: flex;
+    align-items: flex-start;
+    padding: 12rpx 0;
+}
+
+.step-index {
+    width: 40rpx;
+    height: 40rpx;
+    border-radius: 20rpx;
+    background: var(--primary-soft);
+    color: var(--primary-dark);
+    font-size: 22rpx;
+    text-align: center;
+    line-height: 40rpx;
+    flex: 0 0 auto;
+    margin-right: 16rpx;
+    margin-top: 4rpx;
+}
+
+.step-text {
+    flex: 1;
+    font-size: 29rpx;
+    line-height: 1.65;
+}
+
+.want-btn {
+    margin-top: 40rpx;
+}
+
+.remove-btn {
+    margin-top: 8rpx;
+    text-align: center;
+    font-size: 26rpx;
+    color: #C0392B;
+    padding: 16rpx;
+}
+
+/* M12 营养估算：四格数字，明确标「粗估」 */
+.nutrition-grid {
+    display: flex;
+    gap: 12rpx;
+}
+
+.nutrition-cell {
+    flex: 1;
+    padding: 20rpx 0;
+    border-radius: 16rpx;
+    background: var(--bg);
+    text-align: center;
+}
+
+.nutrition-num {
+    font-size: 40rpx;
+    font-weight: 600;
+    color: var(--primary-dark);
+    line-height: 1.2;
+}
+
+.nutrition-g {
+    font-size: 22rpx;
+    font-weight: 400;
+    color: var(--muted);
+    margin-left: 2rpx;
+}
+
+.nutrition-tag {
+    margin-top: 6rpx;
+    font-size: 22rpx;
+    color: var(--muted);
+}
+
+.nutrition-hint {
+    margin-top: 14rpx;
+    font-size: 22rpx;
+    color: var(--muted);
+}
+
+.cook-btn {
+    margin-top: 20rpx;
+}

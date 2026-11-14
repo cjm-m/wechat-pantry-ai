@@ -1,0 +1,89 @@
+<view class="page page-with-bar">
+    <view class="center-box" wx:if="{{authState === 'checking'}}">
+        <view class="skeleton loading-line"></view>
+    </view>
+
+    <block wx:if="{{authState === 'ready'}}">
+        <view class="card">
+            <view class="row-between">
+                <view>
+                    <view class="sub">合计</view>
+                    <view class="total-text">¥{{cartTotal}}</view>
+                </view>
+                <text class="link clear-all" wx:if="{{cart.length > 0}}" bindtap="onClear">清空</text>
+            </view>
+        </view>
+
+        <view class="error-box" wx:if="{{error}}">{{error}}</view>
+
+        <view class="card add-card">
+            <view class="add-title">添加要买的东西</view>
+            <view class="add-row">
+                <input
+                    class="add-name"
+                    value="{{draftName}}"
+                    placeholder="商品名称"
+                    placeholder-class="placeholder"
+                    maxlength="20"
+                    bindinput="onDraftNameInput"
+                />
+                <input
+                    class="add-price"
+                    type="digit"
+                    value="{{draftPrice}}"
+                    placeholder="单价"
+                    placeholder-class="placeholder"
+                    maxlength="8"
+                    bindinput="onDraftPriceInput"
+                />
+                <view class="add-btn" bindtap="onAdd">加入</view>
+            </view>
+        </view>
+
+        <view class="empty" wx:if="{{cart.length === 0}}">
+            <view class="empty-icon">🛒</view>
+            <view class="empty-title">购物车是空的</view>
+            <view class="empty-desc">上面输入名称和单价就能加进来；冰箱里的食材也能加入</view>
+            <view class="btn btn-soft btn-small empty-btn" bindtap="onGoFridge">去冰箱看看</view>
+        </view>
+
+        <view class="card cart-card" wx:else>
+            <view class="cart-row" wx:for="{{cart}}" wx:key="id">
+                <view class="grow">
+                    <text class="cart-name">{{item.name}}</text>
+                    <view class="cart-price-line">
+                        <text class="cart-price-label">单价 ¥</text>
+                        <input
+                            class="cart-price-input"
+                            type="digit"
+                            value="{{item.priceText}}"
+                            data-index="{{index}}"
+                            placeholder="0.00"
+                            placeholder-class="placeholder"
+                            bindinput="onPriceInput"
+                            bindblur="onPriceBlur"
+                        />
+                        <text class="cart-subtotal">小计 ¥{{item.subtotal}}</text>
+                    </view>
+                </view>
+                <view class="stepper">
+                    <view class="step-btn" data-id="{{item.id}}" data-delta="-1" catchtap="onStep">−</view>
+                    <text class="step-num">{{item.quantityText}}</text>
+                    <view class="step-btn" data-id="{{item.id}}" data-delta="1" catchtap="onStep">+</view>
+                </view>
+                <text class="cart-del" data-id="{{item.id}}" catchtap="onRemove">×</text>
+            </view>
+        </view>
+
+        <view class="bottom-bar" wx:if="{{authState === 'ready'}}">
+            <view class="grow">
+                <text class="sub">合计 </text>
+                <text class="bar-total">¥{{cartTotal}}</text>
+            </view>
+            <view
+                class="btn btn-primary btn-small checkout-btn {{cartBusy || cart.length === 0 ? 'is-disabled' : ''}}"
+                bindtap="onCheckout"
+            >{{cartBusy ? '正在加…' : '买回来了，加进冰箱'}}</view>
+        </view>
+    </block>
+</view>

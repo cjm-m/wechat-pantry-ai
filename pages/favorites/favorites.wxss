@@ -1,0 +1,38 @@
+.loading-line {
+    width: 100%;
+}
+
+.fav-card {
+    margin-top: 20rpx;
+}
+
+.fav-title {
+    font-size: 34rpx;
+    font-weight: 600;
+}
+
+.fav-arrow {
+    color: #C6BBAF;
+    font-size: 34rpx;
+}
+
+.fav-summary {
+    margin-top: 8rpx;
+    font-size: 26rpx;
+    color: var(--muted);
+}
+
+.fav-meta {
+    margin-top: 16rpx;
+    font-size: 24rpx;
+    color: #B3A79B;
+}
+
+.dot {
+    margin: 0 10rpx;
+}
+
+.empty-btn {
+    margin: 32rpx auto 0;
+    width: 220rpx;
+}

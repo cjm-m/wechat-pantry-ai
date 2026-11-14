@@ -1,0 +1,37 @@
+<view class="page">
+    <view class="center-box" wx:if="{{authState === 'checking'}}">
+        <view class="skeleton loading-line"></view>
+    </view>
+
+    <block wx:if="{{authState === 'ready'}}">
+        <view class="error-box" wx:if="{{error}}">{{error}}</view>
+
+        <view class="center-box" wx:if="{{loading}}">
+            <view class="skeleton loading-line"></view>
+        </view>
+
+        <view class="empty" wx:elif="{{items.length === 0}}">
+            <view class="empty-icon">🍽️</view>
+            <view class="empty-title">还没有收藏过菜谱</view>
+            <view class="empty-desc">在配菜页生成的菜，觉得不错就点个收藏</view>
+            <view class="btn btn-soft btn-small empty-btn" bindtap="onGoCook">去配菜</view>
+        </view>
+
+        <block wx:else>
+            <view class="card fav-card" wx:for="{{items}}" wx:key="id" data-id="{{item.id}}" bindtap="onOpen">
+                <view class="row-between">
+                    <text class="fav-title">{{item.title}}</text>
+                    <text class="fav-arrow">›</text>
+                </view>
+                <view class="fav-summary" wx:if="{{item.summary}}">{{item.summary}}</view>
+                <view class="fav-meta">
+                    <text>{{item.stepCount}} 步</text>
+                    <text class="dot">·</text>
+                    <text wx:if="{{item.ownerLabel}}">{{item.ownerLabel}}收藏</text>
+                    <text class="dot" wx:if="{{item.ownerLabel}}">·</text>
+                    <text>{{item.timeText}}</text>
+                </view>
+            </view>
+        </block>
+    </block>
+</view>

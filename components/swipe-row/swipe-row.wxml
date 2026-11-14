@@ -1,0 +1,30 @@
+<view
+    class="swipe-row"
+    bindtouchstart="onTouchStart"
+    bindtouchmove="onTouchMove"
+    bindtouchend="onTouchEnd"
+    bindtouchcancel="onTouchEnd"
+>
+    <!-- 内容层固定不动：行首的勾选圆点与名称在任何展开状态下都完整可见 -->
+    <view class="swipe-content">
+        <slot></slot>
+    </view>
+
+    <!-- 操作区作为不透明抽屉从边缘滑入，覆盖内容尾部 -->
+    <view
+        class="swipe-actions {{side === 'right' ? 'is-right' : 'is-left'}} {{dragging ? 'is-dragging' : ''}}"
+        style="width: {{actionPx}}px; transform: translate3d({{panelX}}px, 0, 0);"
+    >
+        <view
+            class="swipe-action-btn tone-{{action.tone}} {{disabled ? 'is-disabled' : ''}}"
+            wx:for="{{actions}}"
+            wx:key="key"
+            wx:for-item="action"
+            data-key="{{action.key}}"
+            catchtap="onActionTap"
+        >{{action.text}}</view>
+    </view>
+
+    <!-- 展开时在内容区盖一层透明遮罩：点内容先收起，不会误触发内容自身的点击 -->
+    <view class="swipe-mask" wx:if="{{open}}" style="{{maskStyle}}" catchtap="onMaskTap"></view>
+</view>

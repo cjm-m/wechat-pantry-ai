@@ -1,0 +1,254 @@
+<view class="page page-with-bar" wx:if="{{authState === 'ready'}}">
+    <!-- 1. 还没拍 -->
+    <block wx:if="{{stage === 'pick'}}">
+        <view class="hero">
+            <view class="hero-title">拍几张，一起认</view>
+            <view class="hero-sub">先认有什么，再单独估保质期</view>
+        </view>
+
+        <view class="card">
+            <view class="btn btn-primary" bindtap="onAddPhotos">📷 拍照 / 从相册多选</view>
+            <view class="scan-tip">最多 {{maxShots}} 张。拍照时不识别，拍够了再一起提交。</view>
+            <view class="manual-line" bindtap="onManual">不方便拍？手动添加 ›</view>
+        </view>
+    </block>
+
+    <!-- 2. 已拍若干张，可继续加 / 删 -->
+    <block wx:if="{{stage === 'collect'}}">
+        <view class="collect-head">
+            <text class="collect-count">已拍 {{shots.length}} / {{maxShots}} 张</text>
+            <text class="collect-hint">点图放大 · 右上角 × 删除</text>
+        </view>
+
+        <view class="shot-grid">
+            <view
+                class="shot-cell"
+                wx:for="{{shots}}"
+                wx:key="key"
+                data-key="{{item.key}}"
+                bindtap="onPreviewShot"
+            >
+                <image class="shot-thumb" src="{{item.path}}" mode="aspectFill" />
+                <view class="shot-del" data-key="{{item.key}}" catchtap="onRemoveShot">×</view>
+            </view>
+            <view class="shot-cell shot-add" wx:if="{{shots.length < maxShots}}" bindtap="onAddPhotos">
+                <text class="shot-add-icon">＋</text>
+                <text class="shot-add-text">继续拍</text>
+            </view>
+        </view>
+
+        <view class="hint-box">拍照阶段不识别，所以不会出现「等它认完才能拍下一张」。识别会在点「开始识别」之后统一进行。</view>
+
+        <view class="bottom-bar">
+            <view class="grow">
+                <text class="sub">共 {{shots.length}} 张</text>
+            </view>
+            <view class="btn btn-ghost btn-small add-more" bindtap="onAddPhotos">再加几张</view>
+            <view class="btn btn-primary btn-small start-btn" bindtap="onStartRecognize">开始识别</view>
+        </view>
+    </block>
+
+    <!-- 3. 逐张基础识别中 -->
+    <block wx:if="{{stage === 'recognizing'}}">
+        <view class="card prog-card">
+            <view class="row-between">
+                <text class="title">正在识别食材</text>
+                <text class="sub">{{doneCount + failCount}} / {{shots.length}}</text>
+            </view>
+            <view class="prog-bar">
+                <view class="prog-fill" style="width: {{shots.length ? (doneCount + failCount) * 100 / shots.length : 0}}%"></view>
+            </view>
+            <view class="scan-tip">这一步只认「有什么」，保质期会在你核对之后单独估算。</view>
+        </view>
+
+        <view class="card shot-status-card">
+            <view class="shot-status-row" wx:for="{{shots}}" wx:key="key" wx:for-item="shot">
+                <image class="shot-mini" src="{{shot.path}}" mode="aspectFill" />
+                <view class="grow">
+                    <view class="shot-status-text">
+                        <block wx:if="{{shot.status === 'pending'}}">排队中</block>
+                        <block wx:elif="{{shot.status === 'running'}}">正在认这张…</block>
+                        <block wx:elif="{{shot.status === 'done'}}">认出 {{shot.items.length}} 样</block>
+                        <block wx:else>这张没认出来</block>
+                    </view>
+                    <view class="shot-status-sub" wx:if="{{shot.status === 'failed'}}">{{shot.error}}</view>
+                </view>
+            </view>
+        </view>
+    </block>
+
+    <!-- 4. 核对页：识别结果 + 手动补充 + 估保质期 -->
+    <block wx:if="{{stage === 'review'}}">
+        <view class="card summary-card">
+            <view class="row-between">
+                <text class="title">{{shots.length}} 张 · {{total}} 样</text>
+                <text class="tag tag-warn" wx:if="{{failCount > 0}}">{{failCount}} 张需手动补</text>
+            </view>
+            <view class="scan-tip">先核对名称、数量、存放位置；没问题再点「估保质期」。</view>
+            <view class="summary-links">
+                <text class="link" wx:if="{{failCount > 0}}" bindtap="onRetryFailed">重新识别失败的</text>
+                <text class="link reset-link" bindtap="onReset">全部重来</text>
+            </view>
+        </view>
+
+        <view class="shot-block" wx:for="{{shots}}" wx:key="key" wx:for-item="shot" wx:for-index="si">
+            <view class="shot-head">
+                <image
+                    class="shot-mini"
+                    src="{{shot.path}}"
+                    mode="aspectFill"
+                    data-key="{{shot.key}}"
+                    bindtap="onPreviewShot"
+                />
+                <view class="grow">
+                    <text class="shot-title">第 {{si + 1}} 张</text>
+                    <text class="shot-sub" wx:if="{{shot.status === 'done'}}">认出 {{shot.items.length}} 样</text>
+                    <text class="shot-sub failed" wx:elif="{{retryingKey === shot.key}}">正在重新识别…</text>
+                    <text class="shot-sub failed" wx:elif="{{shot.items.length === 0}}">没认出来，可以手动补</text>
+                    <text class="shot-sub" wx:else>手动补了 {{shot.items.length}} 样</text>
+                </view>
+            </view>
+
+            <!-- 识别失败且还没补过：给一条明确的出路；重认中切到加载态 -->
+            <view class="card rescue-card" wx:if="{{(shot.status === 'failed' || shot.status === 'running') && shot.items.length === 0}}">
+                <view class="rescue-text" wx:if="{{retryingKey === shot.key}}">正在重新识别这张照片，请稍等…</view>
+                <view class="rescue-text" wx:else>这张照片没认出来：{{shot.error}}</view>
+                <view class="rescue-actions">
+                    <view
+                        class="btn btn-primary btn-small retry-btn {{retryingKey === shot.key ? 'is-disabled' : ''}}"
+                        data-si="{{si}}"
+                        bindtap="onRetryShot"
+                    >{{retryingKey === shot.key ? '识别中…' : '重新识别'}}</view>
+                    <view class="btn btn-soft btn-small" data-si="{{si}}" bindtap="onAddManualItem">手动补充</view>
+                    <text class="link rescue-preview" data-key="{{shot.key}}" bindtap="onPreviewShot">看看原图</text>
+                </view>
+                <view class="skeleton rescue-skeleton" wx:if="{{retryingKey === shot.key}}"></view>
+            </view>
+
+            <view class="scan-item" wx:for="{{shot.items}}" wx:key="key" wx:for-item="item" wx:for-index="ii">
+                <view class="row">
+                    <view
+                        class="check {{item.checked ? 'check-on' : ''}}"
+                        data-si="{{si}}"
+                        data-ii="{{ii}}"
+                        catchtap="onToggle"
+                    >{{item.checked ? '✓' : ''}}</view>
+                    <input
+                        class="scan-name"
+                        value="{{item.name}}"
+                        data-si="{{si}}"
+                        data-ii="{{ii}}"
+                        data-field="name"
+                        maxlength="20"
+                        placeholder="食材名"
+                        placeholder-class="placeholder"
+                        bindinput="onFieldInput"
+                    />
+                    <text class="scan-del" data-si="{{si}}" data-ii="{{ii}}" catchtap="onRemoveItem">×</text>
+                </view>
+
+                <view class="scan-fields">
+                    <view class="scan-field">
+                        <text class="scan-label">类别</text>
+                        <picker
+                            mode="selector"
+                            range="{{categories}}"
+                            value="{{item.categoryIndex}}"
+                            data-si="{{si}}"
+                            data-ii="{{ii}}"
+                            bindchange="onCategoryChange"
+                        >
+                            <view class="scan-value">{{item.category}} ›</view>
+                        </picker>
+                    </view>
+
+                    <view class="scan-field">
+                        <text class="scan-label">数量</text>
+                        <input
+                            class="scan-input"
+                            value="{{item.quantity}}"
+                            data-si="{{si}}"
+                            data-ii="{{ii}}"
+                            data-field="quantity"
+                            maxlength="6"
+                            bindinput="onFieldInput"
+                        />
+                        <input
+                            class="scan-input unit"
+                            value="{{item.unit}}"
+                            data-si="{{si}}"
+                            data-ii="{{ii}}"
+                            data-field="unit"
+                            maxlength="4"
+                            bindinput="onFieldInput"
+                        />
+                    </view>
+
+                    <view class="scan-field">
+                        <text class="scan-label">存放</text>
+                        <view class="store-chips">
+                            <view
+                                class="store-chip {{item.storage === '冷藏' ? 'store-chip-on' : ''}}"
+                                data-si="{{si}}"
+                                data-ii="{{ii}}"
+                                data-storage="冷藏"
+                                bindtap="onStoragePick"
+                            >冷藏</view>
+                            <view
+                                class="store-chip {{item.storage === '冷冻' ? 'store-chip-on' : ''}}"
+                                data-si="{{si}}"
+                                data-ii="{{ii}}"
+                                data-storage="冷冻"
+                                bindtap="onStoragePick"
+                            >冷冻</view>
+                        </view>
+                    </view>
+
+                    <view class="scan-field">
+                        <text class="scan-label">保质期到</text>
+                        <picker
+                            mode="date"
+                            value="{{item.expireAt}}"
+                            data-si="{{si}}"
+                            data-ii="{{ii}}"
+                            bindchange="onDateChange"
+                        >
+                            <view class="scan-value {{item.expireAt ? '' : 'value-pending'}}">{{item.expireAt ? item.expireAt : '待估算'}} ›</view>
+                        </picker>
+                    </view>
+
+                    <view class="expire-note" wx:if="{{item.expireNote}}">AI 依据：{{item.expireNote}}</view>
+                </view>
+            </view>
+
+            <view class="add-one" data-si="{{si}}" bindtap="onAddManualItem">＋ 给这张再加一样</view>
+        </view>
+
+        <view class="error-box" wx:if="{{errorText}}">{{errorText}}</view>
+
+        <view class="bottom-bar">
+            <view class="grow">
+                <text class="link" bindtap="onSelectAll">全选</text>
+                <text class="link none-link" bindtap="onSelectNone">取消</text>
+            </view>
+            <view
+                class="btn btn-soft btn-small est-btn {{estimating ? 'is-disabled' : ''}}"
+                wx:if="{{pendingExpire > 0}}"
+                bindtap="onEstimateExpire"
+            >{{estimating ? '估算中…' : '估保质期（' + pendingExpire + '）'}}</view>
+            <view class="btn btn-primary btn-small save-btn {{saving ? 'is-disabled' : ''}}" bindtap="onSave">
+                {{saving ? '正在加…' : '入库（' + selectedCount + '）'}}
+            </view>
+        </view>
+
+        <!-- 估算遮罩 -->
+        <view class="est-mask" wx:if="{{estimating}}">
+            <view class="est-box">
+                <view class="est-title">正在按存放位置估保质期…</view>
+                <view class="skeleton est-line"></view>
+                <view class="skeleton est-line short"></view>
+                <view class="est-sub">冷藏和冷冻会分别给期限，稍等一下</view>
+            </view>
+        </view>
+    </block>
+</view>

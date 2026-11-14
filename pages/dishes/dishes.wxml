@@ -1,0 +1,101 @@
+<template name="dishRow">
+    <view class="dish-row" data-id="{{item.id}}" bindtap="onOpen">
+        <view class="grow">
+            <view class="dish-title-line">
+                <text class="dish-title">{{item.title}}</text>
+                <text class="tag tag-{{item.statusTone}}">{{item.statusText}}</text>
+            </view>
+            <view class="dish-meta" wx:if="{{item.mealLabel || item.note}}">
+                <text wx:if="{{item.mealLabel}}">{{item.mealLabel}}</text>
+                <text class="dot" wx:if="{{item.mealLabel && item.note}}">·</text>
+                <text wx:if="{{item.note}}">{{item.note}}</text>
+            </view>
+            <view class="dish-time">{{item.timeText}}</view>
+        </view>
+        <view class="dish-actions">
+            <view
+                wx:if="{{item.canClaim}}"
+                class="btn btn-primary btn-small"
+                data-id="{{item.id}}"
+                catchtap="onClaim"
+            >{{busyId === item.id ? '接…' : '我来做'}}</view>
+            <text
+                wx:if="{{item.canCancel}}"
+                class="dish-link"
+                data-id="{{item.id}}"
+                catchtap="onCancel"
+            >取消</text>
+            <text
+                wx:if="{{item.canDelete}}"
+                class="dish-link"
+                data-id="{{item.id}}"
+                catchtap="onDelete"
+            >删掉</text>
+        </view>
+    </view>
+</template>
+
+<view class="page page-with-bar">
+    <view class="center-box" wx:if="{{authState === 'checking'}}">
+        <view class="skeleton loading-line"></view>
+    </view>
+
+    <block wx:if="{{authState === 'ready'}}">
+        <view class="invite-card" wx:if="{{pendingForMe > 0}}">
+            <text class="invite-emoji">🥢</text>
+            <view class="grow">
+                <view class="invite-title">TA 点了 {{pendingForMe}} 道菜</view>
+                <view class="invite-sub">接一道，今天就有答案了</view>
+            </view>
+        </view>
+
+        <view class="error-box" wx:if="{{error}}">{{error}}</view>
+
+        <view class="section" wx:if="{{theirs.length > 0}}">
+            <view class="section-head">
+                <text class="section-title">TA 点的</text>
+                <text class="sub">{{theirs.length}} 道</text>
+            </view>
+            <view class="card">
+                <block wx:for="{{theirs}}" wx:key="id">
+                    <template is="dishRow" data="{{item: item, busyId: busyId}}" />
+                </block>
+            </view>
+        </view>
+
+        <view class="section" wx:if="{{mine.length > 0}}">
+            <view class="section-head">
+                <text class="section-title">我点的</text>
+                <text class="sub">{{mine.length}} 道</text>
+            </view>
+            <view class="card">
+                <block wx:for="{{mine}}" wx:key="id">
+                    <template is="dishRow" data="{{item: item, busyId: busyId}}" />
+                </block>
+            </view>
+        </view>
+
+        <view class="empty" wx:if="{{theirs.length === 0 && mine.length === 0}}">
+            <view class="empty-icon">🥢</view>
+            <view class="empty-title">还没人点菜</view>
+            <view class="empty-desc">想吃什么就说出来，接单的人负责做</view>
+        </view>
+
+        <view class="section" wx:if="{{closed.length > 0}}">
+            <view class="section-head" bindtap="onToggleClosed">
+                <text class="section-title">最近结束</text>
+                <text class="link">{{showClosed ? '收起' : '展开'}}</text>
+            </view>
+            <view class="card" wx:if="{{showClosed}}">
+                <block wx:for="{{closed}}" wx:key="id">
+                    <template is="dishRow" data="{{item: item, busyId: busyId}}" />
+                </block>
+            </view>
+        </view>
+
+        <view class="bottom-bar">
+            <view class="grow sub">想吃什么，点一道</view>
+            <view class="btn btn-primary btn-small create-btn" bindtap="onGoCreate">点菜</view>
+        </view>
+    </block>
+</view>

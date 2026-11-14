@@ -1,0 +1,86 @@
+.loading-line {
+    width: 100%;
+}
+
+/* 消息入口放在问候语右侧：首页是唯一必然经过的落地页，比 tabBar 红点指得更准。 */
+.bell {
+    position: relative;
+    width: 76rpx;
+    height: 76rpx;
+    border-radius: 38rpx;
+    background: rgba(255, 255, 255, 0.66);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 16rpx;
+    flex: 0 0 auto;
+}
+
+.bell-icon {
+    font-size: 34rpx;
+    line-height: 1;
+}
+
+.bell-badge {
+    position: absolute;
+    top: -6rpx;
+    right: -6rpx;
+    min-width: 34rpx;
+    height: 34rpx;
+    padding: 0 8rpx;
+    border-radius: 17rpx;
+    background: var(--primary);
+    color: #FFFFFF;
+    font-size: 20rpx;
+    line-height: 34rpx;
+    text-align: center;
+    border: 2rpx solid #FFF0E4;
+}
+
+.expiring {
+    margin-top: 20rpx;
+    padding: 14rpx 20rpx;
+    border-radius: 14rpx;
+    background: rgba(255, 255, 255, 0.72);
+    font-size: 24rpx;
+    color: #A9511F;
+}
+
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 28rpx;
+}
+
+.tile {
+    width: 48.5%;
+    box-sizing: border-box;
+    background: var(--card);
+    border-radius: 24rpx;
+    padding: 28rpx 24rpx;
+    margin-bottom: 20rpx;
+    box-shadow: 0 4rpx 20rpx rgba(120, 92, 70, 0.05);
+}
+
+.tile-icon {
+    font-size: 44rpx;
+    line-height: 1;
+}
+
+.tile-title {
+    margin-top: 18rpx;
+    font-size: 30rpx;
+    font-weight: 600;
+}
+
+.tile-sub {
+    margin-top: 6rpx;
+    font-size: 23rpx;
+    color: var(--muted);
+}
+
+/* 「TA 点了 N 道」在卡片里要有点颜色，否则和其他说明文字分不开 */
+.tile-hot {
+    color: var(--primary-dark);
+}

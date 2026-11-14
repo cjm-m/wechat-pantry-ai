@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "冰箱",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "swipe-row": "/components/swipe-row/swipe-row"
+  }
+}

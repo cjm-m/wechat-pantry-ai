@@ -1,0 +1,114 @@
+<view class="page page-with-bar" bindtap="onPageTap">
+    <view class="center-box" wx:if="{{authState === 'checking'}}">
+        <view class="skeleton loading-line"></view>
+        <view class="skeleton loading-line short"></view>
+    </view>
+
+    <block wx:if="{{authState === 'ready'}}">
+        <view class="hero">
+            <view class="row-between">
+                <view class="grow">
+                    <view class="hero-title">{{spaceName}}</view>
+                    <view class="hero-sub">共 {{total}} 样 · 已勾选 {{selectedCount}} 样</view>
+                </view>
+                <view class="hero-icon">🧊</view>
+            </view>
+
+            <view class="ai-pill {{filling ? 'is-busy' : ''}}" wx:if="{{missingCount > 0}}" bindtap="onFillExpire">
+                <block wx:if="{{filling}}">正在按存放位置估算…</block>
+                <block wx:else>🧠 {{missingCount}} 样没有保质期 · 让 AI 补上 ›</block>
+            </view>
+        </view>
+
+        <view class="error-box" wx:if="{{error}}">{{error}}</view>
+
+        <view class="center-box" wx:if="{{loading}}">
+            <view class="skeleton loading-line"></view>
+            <view class="skeleton loading-line short"></view>
+        </view>
+
+        <block wx:elif="{{total === 0}}">
+            <view class="empty">
+                <view class="empty-icon">🥚</view>
+                <view class="empty-title">冰箱还是空的</view>
+                <view class="empty-desc">拍张照让它自己认，或者点加号手动记一笔</view>
+                <view class="btn btn-soft btn-small empty-btn" bindtap="onGoScan">📷 拍照入库</view>
+            </view>
+        </block>
+
+        <block wx:else>
+            <view class="area" wx:for="{{areas}}" wx:key="key" wx:for-item="area">
+                <view class="area-head">
+                    <text class="area-name">{{area.icon}} {{area.key}}区</text>
+                    <text class="area-count">{{area.count}} 样</text>
+                </view>
+
+                <view class="area-empty" wx:if="{{area.count === 0}}">
+                    <text class="sub">这个区还空着</text>
+                </view>
+
+                <block wx:else>
+                    <view class="section" wx:for="{{area.groups}}" wx:key="key" wx:for-item="group">
+                        <view class="section-head">
+                            <text class="section-title">{{group.icon}} {{group.key}}</text>
+                            <text class="section-title">{{group.items.length}} 样</text>
+                        </view>
+                        <view class="card group-card">
+                            <swipe-row
+                                class="swipe-item"
+                                wx:for="{{group.items}}"
+                                wx:key="id"
+                                wx:for-item="item"
+                                data-id="{{item.id}}"
+                                actions="{{rowActions}}"
+                                action-width="{{120}}"
+                                side="right"
+                                disabled="{{deletingId === item.id}}"
+                                bind:action="onActionItem"
+                                bind:swipeend="onRowSwipe"
+                                bind:open="onRowOpen"
+                                bind:close="onRowClose"
+                            >
+                                <view class="list-item {{item.checked ? 'is-checked' : ''}}" data-id="{{item.id}}" bindtap="onToggle">
+                                    <view
+                                        class="check {{item.checked ? 'check-on' : ''}}"
+                                        data-id="{{item.id}}"
+                                        catchtap="onToggle"
+                                    >{{item.checked ? '✓' : ''}}</view>
+                                    <view class="grow">
+                                        <view class="row-between">
+                                            <text class="item-name {{item.checked ? 'is-checked' : ''}}">{{item.name}}</text>
+                                            <text class="mono-amount">{{item.amount}}</text>
+                                        </view>
+                                        <view class="item-note" wx:if="{{item.note}}">{{item.note}}</view>
+                                        <view class="item-tags">
+                                            <text class="tag tag-danger" wx:if="{{item.expire && item.expire.level === 'danger'}}">{{item.expire.text}}</text>
+                                            <text class="tag tag-warn" wx:elif="{{item.expire && item.expire.level === 'warn'}}">{{item.expire.text}}</text>
+                                            <text class="tag" wx:elif="{{item.expire}}">{{item.expire.text}}</text>
+                                            <text class="tag tag-none" wx:else>无保质期</text>
+                                            <text class="tag" wx:if="{{item.ownerLabel}}">{{item.ownerLabel}}加的</text>
+                                        </view>
+                                    </view>
+                                </view>
+                            </swipe-row>
+                        </view>
+                    </view>
+                </block>
+            </view>
+
+            <view class="tip-line">点一行就勾上它 · 左滑可编辑或删除</view>
+        </block>
+
+        <view class="fab-stack" wx:if="{{authState === 'ready'}}">
+            <view class="fab fab-scan" bindtap="onGoScan">📷</view>
+            <view class="fab" bindtap="onAdd">+</view>
+        </view>
+
+        <view class="bottom-bar" wx:if="{{authState === 'ready'}}">
+            <view class="grow">
+                <text class="sub">已选 {{selectedCount}} 样</text>
+            </view>
+            <view class="btn btn-primary btn-small go-cook" bindtap="onGoCook">去配菜</view>
+        </view>
+    </block>
+</view>

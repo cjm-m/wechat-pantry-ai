@@ -1,0 +1,164 @@
+.loading-line {
+    width: 100%;
+}
+
+.total-text {
+    font-size: 44rpx;
+    font-weight: 600;
+    color: var(--primary-dark);
+}
+
+.clear-all {
+    color: var(--muted);
+}
+
+.add-card {
+    margin-top: 20rpx;
+    padding: 22rpx 24rpx 24rpx;
+}
+
+.add-title {
+    font-size: 24rpx;
+    color: var(--muted);
+    letter-spacing: 1rpx;
+    margin-bottom: 16rpx;
+}
+
+.add-row {
+    display: flex;
+    align-items: center;
+}
+
+.add-name {
+    flex: 1;
+    min-width: 0;
+    height: 80rpx;
+    line-height: 80rpx;
+    padding: 0 20rpx;
+    font-size: 28rpx;
+    background: #FFFFFF;
+    border: 2rpx solid var(--line);
+    border-radius: 16rpx;
+}
+
+.add-price {
+    width: 150rpx;
+    height: 80rpx;
+    line-height: 80rpx;
+    margin-left: 14rpx;
+    padding: 0 12rpx;
+    font-size: 28rpx;
+    text-align: center;
+    background: #FFFFFF;
+    border: 2rpx solid var(--line);
+    border-radius: 16rpx;
+}
+
+.add-btn {
+    width: 128rpx;
+    height: 80rpx;
+    margin-left: 14rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16rpx;
+    background: var(--primary-soft);
+    color: var(--primary-dark);
+    font-size: 28rpx;
+    font-weight: 500;
+    flex: 0 0 auto;
+}
+
+.cart-card {
+    margin-top: 20rpx;
+    padding: 4rpx 28rpx;
+}
+
+.cart-row {
+    display: flex;
+    align-items: center;
+    padding: 24rpx 0;
+}
+
+.cart-row + .cart-row {
+    border-top: 2rpx solid var(--line);
+}
+
+.cart-name {
+    font-size: 30rpx;
+    font-weight: 500;
+}
+
+.cart-price-line {
+    display: flex;
+    align-items: center;
+    margin-top: 8rpx;
+}
+
+.cart-price-label {
+    font-size: 22rpx;
+    color: var(--muted);
+}
+
+.cart-price-input {
+    width: 120rpx;
+    height: 56rpx;
+    line-height: 56rpx;
+    font-size: 26rpx;
+    padding: 0;
+    border-bottom: 2rpx solid var(--line);
+    text-align: center;
+}
+
+.cart-subtotal {
+    margin-left: 16rpx;
+    font-size: 22rpx;
+    color: var(--muted);
+}
+
+.stepper {
+    display: flex;
+    align-items: center;
+    margin-left: 16rpx;
+}
+
+.step-btn {
+    width: 52rpx;
+    height: 52rpx;
+    border-radius: 26rpx;
+    background: #F6F1EA;
+    color: var(--text);
+    font-size: 30rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.step-num {
+    min-width: 60rpx;
+    text-align: center;
+    font-size: 28rpx;
+}
+
+.cart-del {
+    width: 44rpx;
+    text-align: right;
+    color: #C6BBAF;
+    font-size: 34rpx;
+    line-height: 1;
+    margin-left: 12rpx;
+}
+
+.bar-total {
+    font-size: 30rpx;
+    font-weight: 600;
+}
+
+.checkout-btn {
+    width: 360rpx;
+}
+
+.empty-btn {
+    margin: 32rpx auto 0;
+    width: 240rpx;
+}

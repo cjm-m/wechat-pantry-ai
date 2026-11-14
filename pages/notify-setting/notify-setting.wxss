@@ -1,0 +1,43 @@
+.loading-line {
+    width: 100%;
+}
+
+.setting-row {
+    padding: 6rpx 0;
+    min-height: 88rpx;
+}
+
+.time-value {
+    font-size: 32rpx;
+    color: var(--primary-dark);
+    min-width: 140rpx;
+    text-align: right;
+}
+
+.subscribe-card {
+    margin-top: 20rpx;
+}
+
+.quota-note {
+    margin-top: 10rpx;
+    line-height: 1.6;
+}
+
+.enable-btn {
+    margin-top: 24rpx;
+}
+
+.mono-inline {
+    font-family: Menlo, Consolas, monospace;
+    font-size: 22rpx;
+    color: #8A5A14;
+}
+
+.footer-note {
+    margin-top: 36rpx;
+    text-align: center;
+    font-size: 22rpx;
+    color: #C6BBAF;
+    line-height: 1.6;
+    padding: 0 20rpx;
+}

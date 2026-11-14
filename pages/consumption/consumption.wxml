@@ -1,0 +1,47 @@
+<view class="page">
+    <view class="center-box" wx:if="{{authState === 'checking'}}">
+        <view class="skeleton loading-line"></view>
+    </view>
+
+    <block wx:if="{{authState === 'ready'}}">
+        <view class="error-box" wx:if="{{error}}">{{error}}</view>
+
+        <view class="card summary-card" wx:if="{{items.length > 0}}">
+            <view class="summary-num">{{items.length}}</view>
+            <view class="summary-label">次记录 · 共动 {{totalRemoved}} 样食材</view>
+            <view class="summary-link" bindtap="onGoNutrition">看营养统计 ›</view>
+        </view>
+
+        <view class="card summary-card" wx:if="{{items.length === 0 && !loading}}">
+            <view class="summary-label">还没有消耗记录，做完一道菜打卡就会出现在这里。</view>
+            <view class="summary-link" bindtap="onGoNutrition">看营养统计 ›</view>
+        </view>
+
+        <view class="center-box" wx:if="{{loading}}">
+            <view class="skeleton loading-line"></view>
+        </view>
+
+        <block wx:if="{{!loading}}">
+            <view class="card" wx:if="{{items.length > 0}}">
+                <view class="log-row" wx:for="{{items}}" wx:key="id">
+                    <view class="log-dot"></view>
+                    <view class="grow">
+                        <view class="log-title">{{item.title}}</view>
+                        <view class="log-names" wx:if="{{item.namesText}}">{{item.namesText}}</view>
+                        <view class="log-meta">
+                            <text class="tag tag-quiet">{{item.sourceText}}</text>
+                            <text class="log-time">{{item.timeText}}</text>
+                        </view>
+                    </view>
+                    <view class="log-count" wx:if="{{item.count > 0}}">{{item.count}}</view>
+                </view>
+            </view>
+
+            <view class="empty" wx:if="{{items.length === 0}}">
+                <view class="empty-icon">🧾</view>
+                <view class="empty-title">还没有记录</view>
+                <view class="empty-desc">在「这周吃什么」里做完一道菜，或者在点菜里点「做好了」，这里就会留一条</view>
+            </view>
+        </block>
+    </block>
+</view>

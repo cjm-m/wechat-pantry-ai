@@ -1,0 +1,111 @@
+<view class="page">
+    <view class="center-box" wx:if="{{authState === 'checking'}}">
+        <view class="skeleton loading-line"></view>
+    </view>
+
+    <block wx:if="{{authState === 'ready'}}">
+        <view class="card">
+            <view class="field">
+                <view class="field-label">食材名字</view>
+                <input
+                    class="field-input"
+                    placeholder="比如 西红柿 / 鸡蛋"
+                    placeholder-class="placeholder"
+                    maxlength="24"
+                    value="{{name}}"
+                    bindinput="onNameInput"
+                />
+            </view>
+
+            <view class="field">
+                <view class="field-label">类别</view>
+                <picker mode="selector" range="{{categories}}" value="{{categoryIndex}}" bindchange="onCategoryChange">
+                    <view class="picker-value">{{category}} <text class="picker-arrow">›</text></view>
+                </picker>
+            </view>
+
+            <view class="field">
+                <view class="field-label">存放位置</view>
+                <view class="chip-list">
+                    <view
+                        class="chip {{storage === '冷藏' ? 'chip-on' : ''}}"
+                        data-storage="冷藏"
+                        bindtap="onStoragePick"
+                    >🧊 冷藏</view>
+                    <view
+                        class="chip {{storage === '冷冻' ? 'chip-on' : ''}}"
+                        data-storage="冷冻"
+                        bindtap="onStoragePick"
+                    >❄️ 冷冻</view>
+                </view>
+            </view>
+
+            <view class="field">
+                <view class="field-label">数量</view>
+                <input
+                    class="field-input"
+                    placeholder="比如 2 / 半"
+                    placeholder-class="placeholder"
+                    maxlength="10"
+                    value="{{quantity}}"
+                    bindinput="onQuantityInput"
+                />
+            </view>
+
+            <view class="field">
+                <view class="field-label">单位</view>
+                <input
+                    class="field-input"
+                    placeholder="比如 个 / 斤 / 把"
+                    placeholder-class="placeholder"
+                    maxlength="6"
+                    value="{{unit}}"
+                    bindinput="onUnitInput"
+                />
+                <view class="chip-list unit-chips">
+                    <view
+                        class="chip {{unit === item ? 'chip-on' : ''}}"
+                        wx:for="{{units}}"
+                        wx:key="*this"
+                        data-unit="{{item}}"
+                        bindtap="onPickUnit"
+                    >{{item}}</view>
+                </view>
+            </view>
+
+            <view class="field">
+                <view class="field-label">备注（可不填）</view>
+                <input
+                    class="field-input"
+                    placeholder="比如 周三买的，先吃"
+                    placeholder-class="placeholder"
+                    maxlength="40"
+                    value="{{note}}"
+                    bindinput="onNoteInput"
+                />
+            </view>
+
+            <view class="field">
+                <view class="field-label">保质期到（可不填）</view>
+                <view class="row-between">
+                    <picker mode="date" value="{{expireAt}}" start="{{today}}" bindchange="onExpireChange">
+                        <view class="picker-value">{{expireAt ? expireAt : '选一个到期日'}} <text class="picker-arrow">›</text></view>
+                    </picker>
+                    <text class="link" wx:if="{{expireAt}}" bindtap="onExpireClear">清除</text>
+                </view>
+            </view>
+        </view>
+
+        <view class="error-box" wx:if="{{error}}">{{error}}</view>
+
+        <view class="btn btn-primary save-btn {{saving ? 'is-disabled' : ''}}" bindtap="onSave">
+            {{saving ? '正在保存…' : '保存'}}
+        </view>
+
+        <view class="cart-btn" wx:if="{{recordId}}" bindtap="onAddToCart">加入购物车（要去买）</view>
+
+        <view class="delete-btn" wx:if="{{recordId}}" bindtap="onDelete">
+            {{deleting ? '正在删除…' : '删掉这样食材'}}
+        </view>
+    </block>
+</view>

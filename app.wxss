@@ -1,0 +1,439 @@
+page {
+    --bg: #FBF7F2;
+    --card: #FFFFFF;
+    --text: #2E2A26;
+    --muted: #9A8F85;
+    --line: #F0E7DD;
+    --primary: #E4693B;
+    --primary-dark: #C9542B;
+    --primary-soft: #FDEDE5;
+    --ok: #3E8E6B;
+    --warn: #C9791F;
+    --warn-soft: #FDF3E2;
+
+    min-height: 100%;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "PingFang SC", sans-serif;
+    font-size: 28rpx;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+}
+
+view,
+text,
+input,
+textarea,
+button,
+scroll-view {
+    box-sizing: border-box;
+}
+
+button {
+    border-radius: 20rpx;
+    font-size: 30rpx;
+    line-height: 1.4;
+}
+
+button::after {
+    border: none;
+}
+
+/* ---------- 布局 ---------- */
+
+.page {
+    min-height: 100vh;
+    padding: 24rpx 28rpx 40rpx;
+}
+
+.page-with-bar {
+    padding-bottom: 200rpx;
+}
+
+.section {
+    margin-top: 32rpx;
+}
+
+.section-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 8rpx 16rpx;
+}
+
+.section-title {
+    font-size: 26rpx;
+    color: var(--muted);
+    letter-spacing: 1rpx;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+}
+
+.row-between {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.grow {
+    flex: 1;
+    min-width: 0;
+}
+
+/* ---------- 卡片 ---------- */
+
+.card {
+    background: var(--card);
+    border-radius: 24rpx;
+    padding: 28rpx;
+    box-shadow: 0 4rpx 20rpx rgba(120, 92, 70, 0.05);
+}
+
+.card + .card {
+    margin-top: 20rpx;
+}
+
+.hero {
+    background: linear-gradient(135deg, #FFF3EA 0%, #FFE7D8 100%);
+    border-radius: 28rpx;
+    padding: 36rpx 32rpx;
+}
+
+.hero-title {
+    font-size: 40rpx;
+    font-weight: 600;
+    letter-spacing: 1rpx;
+}
+
+.hero-sub {
+    margin-top: 8rpx;
+    font-size: 26rpx;
+    color: #A9705A;
+}
+
+/* ---------- 文本 ---------- */
+
+.title {
+    font-size: 34rpx;
+    font-weight: 600;
+}
+
+.sub {
+    font-size: 26rpx;
+    color: var(--muted);
+}
+
+.mono-amount {
+    font-size: 24rpx;
+    color: var(--muted);
+}
+
+.link {
+    color: var(--primary);
+    font-size: 26rpx;
+}
+
+/* ---------- 按钮 ---------- */
+
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 92rpx;
+    border-radius: 22rpx;
+    font-size: 30rpx;
+    font-weight: 500;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: #FFFFFF;
+}
+
+.btn-primary.is-disabled {
+    background: #E9C4B4;
+    color: #FFF9F5;
+}
+
+.btn-ghost {
+    background: #FFFFFF;
+    color: var(--text);
+    border: 2rpx solid var(--line);
+}
+
+.btn-soft {
+    background: var(--primary-soft);
+    color: var(--primary-dark);
+}
+
+.btn-small {
+    height: 64rpx;
+    padding: 0 28rpx;
+    font-size: 26rpx;
+    border-radius: 18rpx;
+}
+
+.btn-danger-text {
+    color: #C0392B;
+}
+
+/* ---------- 表单 ---------- */
+
+.field {
+    padding: 22rpx 0;
+}
+
+.field + .field {
+    border-top: 2rpx solid var(--line);
+}
+
+.field-label {
+    font-size: 26rpx;
+    color: var(--muted);
+    margin-bottom: 12rpx;
+}
+
+.field-input {
+    font-size: 32rpx;
+    height: 64rpx;
+    line-height: 64rpx;
+    padding: 0;
+}
+
+.placeholder {
+    color: #C6BBAF;
+}
+
+.picker-value {
+    font-size: 32rpx;
+    min-height: 56rpx;
+    display: flex;
+    align-items: center;
+}
+
+/* ---------- 标签 / 芯片 ---------- */
+
+.tag {
+    display: inline-flex;
+    align-items: center;
+    height: 40rpx;
+    padding: 0 14rpx;
+    border-radius: 10rpx;
+    font-size: 22rpx;
+    background: #F6F1EA;
+    color: #8C8177;
+}
+
+.tag-soft {
+    background: var(--primary-soft);
+    color: var(--primary-dark);
+}
+
+.tag-warn {
+    background: var(--warn-soft);
+    color: var(--warn);
+}
+
+.tag-danger {
+    background: #FDECEA;
+    color: #B33A2B;
+}
+
+.tag-none {
+    background: transparent;
+    border: 2rpx dashed #DED4C8;
+    color: #B3A79B;
+}
+
+.tag-ok {
+    background: #E8F4EC;
+    color: var(--ok);
+}
+
+.tag-quiet {
+    background: #F4F1EC;
+    color: #A79C91;
+}
+
+.chip {
+    display: inline-flex;
+    align-items: center;
+    height: 60rpx;
+    padding: 0 20rpx;
+    margin: 0 12rpx 12rpx 0;
+    border-radius: 30rpx;
+    background: #FFFFFF;
+    border: 2rpx solid var(--line);
+    font-size: 26rpx;
+    color: var(--text);
+}
+
+.chip-close {
+    margin-left: 10rpx;
+    color: #C6BBAF;
+    font-size: 24rpx;
+}
+
+.chip-list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* ---------- 列表 ---------- */
+
+.list-item {
+    display: flex;
+    align-items: center;
+    padding: 24rpx 0;
+}
+
+.list-item + .list-item {
+    border-top: 2rpx solid var(--line);
+}
+
+.check {
+    width: 44rpx;
+    height: 44rpx;
+    border-radius: 22rpx;
+    border: 3rpx solid #DED4C8;
+    margin-right: 22rpx;
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFFFFF;
+    font-size: 24rpx;
+}
+
+.check-on {
+    background: var(--primary);
+    border-color: var(--primary);
+}
+
+.item-name {
+    font-size: 32rpx;
+}
+
+.item-name.is-checked {
+    color: var(--primary-dark);
+}
+
+.item-note {
+    font-size: 24rpx;
+    color: var(--muted);
+    margin-top: 4rpx;
+}
+
+/* ---------- 悬浮新增 ---------- */
+
+.fab {
+    position: fixed;
+    right: 36rpx;
+    bottom: 200rpx;
+    width: 108rpx;
+    height: 108rpx;
+    border-radius: 54rpx;
+    background: var(--primary);
+    color: #FFFFFF;
+    font-size: 56rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10rpx 28rpx rgba(228, 105, 59, 0.32);
+    z-index: 20;
+}
+
+/* ---------- 吸底操作条 ---------- */
+
+.bottom-bar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 18rpx 28rpx calc(18rpx + env(safe-area-inset-bottom));
+    background: rgba(251, 247, 242, 0.96);
+    border-top: 2rpx solid var(--line);
+    display: flex;
+    align-items: center;
+    gap: 20rpx;
+    z-index: 30;
+}
+
+/* ---------- 状态 ---------- */
+
+.empty {
+    padding: 100rpx 40rpx;
+    text-align: center;
+}
+
+.empty-icon {
+    font-size: 72rpx;
+}
+
+.empty-title {
+    margin-top: 20rpx;
+    font-size: 30rpx;
+    color: var(--text);
+}
+
+.empty-desc {
+    margin-top: 10rpx;
+    font-size: 26rpx;
+    color: var(--muted);
+}
+
+.center-box {
+    min-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60rpx;
+}
+
+.error-box {
+    margin-top: 24rpx;
+    padding: 20rpx 24rpx;
+    border-radius: 16rpx;
+    background: #FDECEA;
+    color: #B33A2B;
+    font-size: 26rpx;
+    /* 登录失败的提示会是两三行可行动文案，行距收紧会很难读。 */
+    line-height: 1.6;
+}
+
+.hint-box {
+    margin-top: 20rpx;
+    padding: 20rpx 24rpx;
+    border-radius: 16rpx;
+    background: var(--warn-soft);
+    color: #8A5A14;
+    font-size: 24rpx;
+}
+
+.skeleton {
+    height: 28rpx;
+    border-radius: 8rpx;
+    background: linear-gradient(90deg, #F1E9E0 25%, #F8F3ED 37%, #F1E9E0 63%);
+    background-size: 400% 100%;
+    animation: shimmer 1.4s ease infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0 50%;
+    }
+}
+
+.divider {
+    height: 2rpx;
+    background: var(--line);
+    margin: 24rpx 0;
+}

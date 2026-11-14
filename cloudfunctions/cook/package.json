@@ -1,0 +1,9 @@
+{
+  "name": "cook",
+  "version": "1.1.0",
+  "description": "转发到自建 NewAPI 的统一模型云函数（recipe / vision / shelf / dish_used / models）",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "latest"
+  }
+}

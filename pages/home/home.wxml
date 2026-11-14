@@ -1,0 +1,71 @@
+<view class="page">
+    <view class="center-box" wx:if="{{authState === 'checking'}}">
+        <view class="skeleton loading-line"></view>
+    </view>
+
+    <block wx:if="{{authState === 'ready'}}">
+        <view class="hero">
+            <view class="row-between">
+                <view class="grow">
+                    <view class="hero-title">{{greeting}}</view>
+                    <view class="hero-sub">{{spaceName}} · 冰箱里还有 {{stockCount}} 样</view>
+                </view>
+                <view class="bell" bindtap="onGoNotice">
+                    <text class="bell-icon">🔔</text>
+                    <view class="bell-badge" wx:if="{{unreadCount > 0}}">{{unreadCount > 99 ? '99+' : unreadCount}}</view>
+                </view>
+            </view>
+            <view class="expiring" wx:if="{{expiringCount > 0}}" bindtap="onGoFridge">
+                ⚠️ {{expiringCount}} 样快要到期了，去看看 ›
+            </view>
+        </view>
+
+        <view class="error-box" wx:if="{{error}}">{{error}}</view>
+
+        <view class="grid">
+            <view class="tile" bindtap="onGoFridge">
+                <text class="tile-icon">🧊</text>
+                <view class="tile-title">冰箱食材</view>
+                <view class="tile-sub">{{stockCount}} 样在库</view>
+            </view>
+            <view class="tile" bindtap="onGoAgent">
+                <text class="tile-icon">💬</text>
+                <view class="tile-title">家庭助手</view>
+                <view class="tile-sub">问冰箱、排菜单、算缺料</view>
+            </view>
+            <view class="tile" bindtap="onGoDishes">
+                <text class="tile-icon">🥢</text>
+                <view class="tile-title">点菜</view>
+                <view class="tile-sub">
+                    <text class="tile-hot" wx:if="{{dishPending > 0}}">TA 点了 {{dishPending}} 道</text>
+                    <text wx:else>我想吃你做的</text>
+                </view>
+            </view>
+            <view class="tile" bindtap="onGoMealPlan">
+                <text class="tile-icon">📅</text>
+                <view class="tile-title">这周吃什么</view>
+                <view class="tile-sub">排一周的饭</view>
+            </view>
+            <view class="tile" bindtap="onGoCook">
+                <text class="tile-icon">🍳</text>
+                <view class="tile-title">AI 配菜</view>
+                <view class="tile-sub">按现有食材出菜谱</view>
+            </view>
+            <view class="tile" bindtap="onGoCart">
+                <text class="tile-icon">🛒</text>
+                <view class="tile-title">购物车</view>
+                <view class="tile-sub">{{cartCount}} 件 · ¥{{cartTotal}}</view>
+            </view>
+            <view class="tile" bindtap="onGoFavorites">
+                <text class="tile-icon">🍽️</text>
+                <view class="tile-title">菜谱收藏</view>
+                <view class="tile-sub">两人收藏过的菜</view>
+            </view>
+            <view class="tile" bindtap="onGoConsumption">
+                <text class="tile-icon">🧾</text>
+                <view class="tile-title">消耗记录</view>
+                <view class="tile-sub">做过哪些菜</view>
+            </view>
+        </view>
+    </block>
+</view>

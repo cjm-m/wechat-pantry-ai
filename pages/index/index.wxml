@@ -1,0 +1,14 @@
+<view>
+    <view class="center-box" wx:if="{{state === 'loading'}}">
+        <view class="logo">🏠</view>
+        <view class="logo-title">我们的小家</view>
+        <view class="logo-sub">正在打开冰箱…</view>
+    </view>
+
+    <view class="center-box" wx:if="{{state === 'error'}}">
+        <view class="logo">🔌</view>
+        <view class="logo-title">连不上服务器</view>
+        <view class="logo-sub">{{errorText}}</view>
+        <view class="btn btn-primary retry" bindtap="onRetry">重试</view>
+    </view>
+</view>

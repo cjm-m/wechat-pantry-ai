@@ -1,0 +1,166 @@
+<view class="page page-with-bar">
+    <view class="center-box" wx:if="{{authState === 'checking'}}">
+        <view class="skeleton loading-line"></view>
+    </view>
+
+    <block wx:if="{{authState === 'ready'}}">
+        <view class="error-box" wx:if="{{error}}">{{error}}</view>
+
+        <block wx:if="{{item}}">
+            <view class="card">
+                <view class="title-line">
+                    <text class="detail-title">{{item.title}}</text>
+                    <text class="tag tag-{{item.statusTone}}">{{item.statusText}}</text>
+                </view>
+                <view class="detail-meta">
+                    <text>{{item.requesterLabel}}点的</text>
+                    <text class="dot" wx:if="{{item.mealLabel}}">·</text>
+                    <text wx:if="{{item.mealLabel}}">{{item.mealLabel}}</text>
+                    <text class="dot" wx:if="{{item.cookLabel}}">·</text>
+                    <text wx:if="{{item.cookLabel}}">{{item.cookLabel}}做</text>
+                </view>
+                <view class="note-box" wx:if="{{item.note}}">「{{item.note}}」</view>
+            </view>
+
+            <!-- 正在找这道菜要用的食材 -->
+            <view class="card" wx:if="{{recipePhase === 'checking'}}">
+                <view class="sub-title">要用的东西</view>
+                <view class="skeleton loading-line"></view>
+                <view class="sub gen-tip">正在找这道菜要用的食材…</view>
+            </view>
+
+            <!-- 模型正在算：秒数 + 流式字数双指标，证明它还活着 -->
+            <view class="card" wx:if="{{recipePhase === 'generating'}}">
+                <view class="row-between">
+                    <text class="sub-title">正在算「{{item.title}}」要用的食材</text>
+                    <text class="tag tag-quiet">{{genElapsed}} 秒</text>
+                </view>
+                <view class="sub gen-tip" wx:if="{{genChars > 0}}">模型正在输出，已收到 {{genChars}} 个字</view>
+                <view class="sub gen-tip" wx:else>请求已发出，等模型开口…</view>
+                <view class="hint-box" wx:if="{{genElapsed >= 8}}">模型有点慢，通常 20 秒左右。等不及可以先取消，下次再算。</view>
+                <view class="btn btn-ghost btn-small cart-btn" bindtap="onCancelRecipe">取消</view>
+            </view>
+
+            <!-- 有食材清单：逐项对比冰箱 -->
+            <view class="card" wx:if="{{recipePhase === 'ready'}}">
+                <view class="row-between">
+                    <text class="sub-title">要用的东西</text>
+                    <text class="tag tag-quiet" wx:if="{{stockFailed}}">冰箱没读出来</text>
+                    <text class="tag tag-warn" wx:elif="{{missCount > 0}}">缺 {{missCount}} 样</text>
+                    <text class="tag tag-ok" wx:elif="{{needRows.length > 0}}">都齐了</text>
+                    <text class="tag tag-quiet" wx:else>只用调料</text>
+                </view>
+
+                <view class="used-item" wx:for="{{needRows}}" wx:for-item="need" wx:key="name">
+                    <text class="used-name">{{need.name}}</text>
+                    <text class="used-amount">{{need.amount || '适量'}}</text>
+                    <text class="tag tag-warn" wx:if="{{need.level === 'miss'}}">缺</text>
+                    <text class="tag tag-quiet" wx:elif="{{need.level === 'maybe'}}">可能有</text>
+                    <text class="tag tag-ok" wx:elif="{{need.level === 'have'}}">有</text>
+                </view>
+
+                <view class="hint-box" wx:if="{{stockFailed}}">
+                    冰箱清单没读出来，先不下结论。点重试，或者去冰箱页确认一下。
+                    <text class="link inline-link" bindtap="onRetryStock">重试</text>
+                </view>
+                <view class="hint-box" wx:elif="{{maybeCount > 0}}">
+                    冰箱里有名字相近的：{{maybeText}}，先当缺了保险。
+                </view>
+
+                <view class="sub recipe-note" wx:if="{{recipeNote}}">{{recipeNote}}</view>
+                <view class="sub recipe-note" wx:if="{{recipeGone && !stockFailed}}">原菜谱已被删掉，这份清单是后来补算的。</view>
+
+                <view
+                    class="btn btn-soft btn-small cart-btn"
+                    wx:if="{{missCount > 0 && !stockFailed}}"
+                    bindtap="onAddMissing"
+                >{{cartBusy ? '正在加…' : '把缺的 ' + missCount + ' 样加进购物车'}}</view>
+
+                <view class="cart-msg" wx:if="{{cartMessage}}" bindtap="onGoCart">
+                    {{cartMessage}} · 去购物车 ›
+                </view>
+            </view>
+
+            <!-- 算出来是空的 -->
+            <view class="card" wx:if="{{recipePhase === 'empty'}}">
+                <view class="sub-title">要用的东西</view>
+                <view class="sub">{{recipeErrorText || '没查出来这道菜要用的食材。'}}</view>
+                <view class="link-row" wx:if="{{canRetry}}">
+                    <text class="dish-link" bindtap="onRetryRecipe">再算一次</text>
+                </view>
+                <view class="link-row">
+                    <text class="dish-link" bindtap="onGoFavorites">去收藏里挑一道</text>
+                </view>
+            </view>
+
+            <!-- 失败 -->
+            <view class="card" wx:if="{{recipePhase === 'failed'}}">
+                <view class="sub-title">要用的东西</view>
+                <view class="sub">{{recipeErrorText || '这次没算出来。'}}</view>
+                <view class="link-row" wx:if="{{canRetry}}">
+                    <text class="dish-link" bindtap="onRetryRecipe">再算一次</text>
+                </view>
+                <view class="link-row">
+                    <text class="dish-link" bindtap="onGoFavorites">去收藏里挑一道</text>
+                </view>
+            </view>
+
+            <!-- 做法（与缺料解耦，拿不到也不影响上面） -->
+            <view class="card" wx:if="{{steps.length > 0}}">
+                <view class="sub-title">做法</view>
+                <view class="step" wx:for="{{steps}}" wx:for-item="step" wx:for-index="si" wx:key="*this">
+                    <text class="step-index">{{si + 1}}</text>
+                    <text class="step-text">{{step}}</text>
+                </view>
+                <view class="link open-recipe" wx:if="{{item.recipeId}}" bindtap="onOpenRecipe">查看完整菜谱 ›</view>
+                <view class="btn btn-soft btn-small start-cook" bindtap="onStartCooking">开始做菜</view>
+            </view>
+
+            <view class="link-row" wx:if="{{item.canRelease}}">
+                <text class="dish-link" bindtap="onRelease">做不了，放回去</text>
+            </view>
+            <view class="link-row" wx:if="{{item.canCancel}}">
+                <text class="dish-link danger" bindtap="onCancel">取消这道菜</text>
+            </view>
+            <view class="link-row" wx:if="{{item.canDelete}}">
+                <text class="dish-link danger" bindtap="onDelete">删掉这条记录</text>
+            </view>
+
+            <view class="bottom-bar">
+                <view
+                    class="btn grow {{barAction ? 'btn-primary' : 'btn-ghost'}}"
+                    bindtap="onBarTap"
+                >{{actionBusy ? '处理中…' : barLabel}}</view>
+            </view>
+        </block>
+    </block>
+
+    <!-- N9：做完之后的消耗确认（设计 §5.3 决策 6） -->
+    <view class="cook-mask" wx:if="{{cookOpen}}" bindtap="onCloseCook">
+        <view class="cook-sheet" catchtap="noop">
+            <view class="cook-head">
+                <text class="cook-title">这道菜用到了这些</text>
+                <text class="cook-close" bindtap="onCloseCook">×</text>
+            </view>
+            <view class="cook-hint">用完的打个勾，冰箱里会删掉这一行</view>
+
+            <view class="cook-row" wx:for="{{cookRows}}" wx:key="name" data-index="{{index}}" bindtap="onToggleCookRow">
+                <view class="cook-check {{item.action === 'removed' && item.checkable ? 'is-on' : ''}} {{item.checkable ? '' : 'is-disabled'}}">
+                    <text wx:if="{{item.action === 'removed' && item.checkable}}">✓</text>
+                </view>
+                <view class="grow">
+                    <view class="cook-name {{item.action === 'removed' && item.checkable ? 'is-checked' : ''}}">{{item.name}}</view>
+                    <view class="cook-note" wx:if="{{!item.checkable}}">冰箱里没找到这一样</view>
+                    <view class="cook-note" wx:elif="{{item.amount}}">{{item.amount}}</view>
+                </view>
+            </view>
+
+            <view class="cook-actions">
+                <view class="btn btn-ghost btn-small" bindtap="onCloseCook">先不改</view>
+                <view class="btn btn-primary btn-small grow" bindtap="onConfirmCook">
+                    {{cooking ? '处理中…' : '确认更新冰箱'}}
+                </view>
+            </view>
+        </view>
+    </view>
+</view>

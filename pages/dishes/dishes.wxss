@@ -1,0 +1,83 @@
+.loading-line {
+    width: 100%;
+}
+
+.invite-card {
+    display: flex;
+    align-items: center;
+    padding: 26rpx 28rpx;
+    border-radius: 24rpx;
+    background: var(--primary-soft);
+}
+
+.invite-emoji {
+    font-size: 46rpx;
+    margin-right: 20rpx;
+}
+
+.invite-title {
+    font-size: 30rpx;
+    font-weight: 600;
+    color: var(--primary-dark);
+}
+
+.invite-sub {
+    margin-top: 4rpx;
+    font-size: 24rpx;
+    color: #A9705A;
+}
+
+.dish-row {
+    display: flex;
+    align-items: center;
+    padding: 24rpx 0;
+}
+
+.dish-row + .dish-row {
+    border-top: 2rpx solid var(--line);
+}
+
+.dish-title-line {
+    display: flex;
+    align-items: center;
+}
+
+.dish-title {
+    font-size: 32rpx;
+    font-weight: 500;
+    margin-right: 14rpx;
+}
+
+.dish-meta {
+    margin-top: 6rpx;
+    font-size: 24rpx;
+    color: var(--muted);
+}
+
+.dot {
+    margin: 0 10rpx;
+    color: #C6BBAF;
+}
+
+.dish-time {
+    margin-top: 4rpx;
+    font-size: 22rpx;
+    color: #B8ADA2;
+}
+
+.dish-actions {
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+    margin-left: 16rpx;
+}
+
+.dish-link {
+    font-size: 24rpx;
+    color: var(--muted);
+    padding: 10rpx 0 10rpx 24rpx;
+}
+
+.create-btn {
+    width: 180rpx;
+}

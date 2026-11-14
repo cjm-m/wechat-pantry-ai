@@ -1,0 +1,80 @@
+:host {
+    display: block;
+}
+
+.swipe-row {
+    position: relative;
+    overflow: hidden;
+}
+
+/* 内容层不参与位移，避免行首内容被裁掉 */
+.swipe-content {
+    position: relative;
+    z-index: 1;
+    background: #FFFFFF;
+}
+
+/* 操作区是覆盖在内容之上的抽屉 */
+.swipe-actions {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 2;
+    display: flex;
+    padding: 10rpx 6rpx 10rpx 0;
+    box-sizing: border-box;
+    /* 必须不透明：抽屉滑入时要完全遮住下方内容，含按钮缝隙 */
+    background: #FFFFFF;
+    transition: transform 240ms cubic-bezier(0.22, 0.61, 0.36, 1);
+    will-change: transform;
+}
+
+.swipe-actions.is-right {
+    left: auto;
+    right: 0;
+    padding: 10rpx 0 10rpx 6rpx;
+}
+
+.swipe-actions.is-dragging {
+    transition: none;
+}
+
+.swipe-action-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16rpx;
+    font-size: 24rpx;
+    letter-spacing: 1rpx;
+    color: #FFFFFF;
+    background: #C0392B;
+}
+
+.swipe-action-btn + .swipe-action-btn {
+    margin-left: 8rpx;
+}
+
+/* 与列表里的 tag 配色保持一致：非破坏性动作用浅底深字 */
+.swipe-action-btn.tone-quiet {
+    background: #F6F1EA;
+    color: #8C8177;
+}
+
+.swipe-action-btn.tone-primary {
+    background: #E4693B;
+    color: #FFFFFF;
+}
+
+.swipe-action-btn.is-disabled {
+    opacity: 0.55;
+}
+
+/* 遮罩压在最上层，只覆盖内容区，不挡按钮 */
+.swipe-mask {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: 3;
+}

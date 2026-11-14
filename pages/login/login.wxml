@@ -1,0 +1,22 @@
+<view class="page login-page">
+    <view class="brand">
+        <view class="brand-mark">🏠</view>
+        <view class="brand-title">我们的小家</view>
+        <view class="brand-sub">两个人的冰箱，一起吃完它</view>
+    </view>
+
+    <view class="card">
+        <view class="btn btn-primary {{wechatLoading ? 'is-disabled' : ''}}" bindtap="onWechatLogin">
+            {{wechatLoading ? '正在登录…' : '微信一键登录'}}
+        </view>
+
+        <view class="error-box" wx:if="{{error}}">{{error}}</view>
+
+        <!-- 当前后端（server/cloud-gateway.js）未实现邮箱验证码登录，该接口回 501。
+             组件文件保留，将来需要时把这一段恢复即可。 -->
+    </view>
+
+    <view class="hint-box">
+        两个人用同一个微信号各自登录即可自动进入同一个家；换微信号会变成另一个家。
+    </view>
+</view>

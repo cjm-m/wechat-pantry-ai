@@ -1,0 +1,197 @@
+.loading-line {
+    width: 100%;
+}
+
+.model-line {
+    display: flex;
+    align-items: center;
+    padding: 16rpx 8rpx 0;
+}
+
+.model-label {
+    font-size: 24rpx;
+    color: var(--muted);
+    margin-right: 12rpx;
+}
+
+.model-name {
+    flex: 1;
+    font-size: 24rpx;
+    color: var(--text);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.model-arrow {
+    font-size: 24rpx;
+    color: var(--primary);
+}
+
+.chip-wrap {
+    margin-top: 20rpx;
+}
+
+.clear-link {
+    margin-left: 28rpx;
+    color: var(--muted);
+}
+
+.empty-inline {
+    margin-top: 20rpx;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.gen-line {
+    margin-top: 24rpx;
+}
+
+.gen-line.short {
+    width: 78%;
+}
+
+.gen-line.shorter {
+    width: 56%;
+}
+
+.cancel-btn {
+    margin-top: 28rpx;
+    text-align: center;
+    font-size: 26rpx;
+    color: var(--muted);
+    padding: 12rpx;
+}
+
+.retry-btn {
+    margin-top: 28rpx;
+}
+
+.dish-card {
+    margin-top: 24rpx;
+}
+
+.dish-title {
+    font-size: 36rpx;
+    font-weight: 600;
+}
+
+.dish-summary {
+    display: block;
+    margin-top: 8rpx;
+    font-size: 26rpx;
+    color: var(--muted);
+}
+
+.sub-title {
+    margin-top: 28rpx;
+    margin-bottom: 8rpx;
+    font-size: 24rpx;
+    color: var(--muted);
+    letter-spacing: 1rpx;
+}
+
+.used-item {
+    display: flex;
+    align-items: center;
+    padding: 10rpx 0;
+}
+
+.used-name {
+    font-size: 28rpx;
+}
+
+.used-amount {
+    margin-left: 12rpx;
+    font-size: 24rpx;
+    color: var(--muted);
+    flex: 1;
+}
+
+.step {
+    display: flex;
+    align-items: flex-start;
+    padding: 10rpx 0;
+}
+
+.step-index {
+    width: 40rpx;
+    height: 40rpx;
+    border-radius: 20rpx;
+    background: var(--primary-soft);
+    color: var(--primary-dark);
+    font-size: 22rpx;
+    text-align: center;
+    line-height: 40rpx;
+    flex: 0 0 auto;
+    margin-right: 16rpx;
+    margin-top: 4rpx;
+}
+
+.step-text {
+    flex: 1;
+    font-size: 28rpx;
+    line-height: 1.6;
+}
+
+.dish-actions {
+    display: flex;
+    align-items: center;
+    gap: 20rpx;
+    margin-top: 28rpx;
+    justify-content: flex-end;
+}
+
+.again-line {
+    margin-top: 32rpx;
+    text-align: center;
+    font-size: 26rpx;
+    color: var(--primary);
+    padding: 16rpx;
+}
+
+.raw-sub {
+    margin-top: 8rpx;
+}
+
+.raw-box {
+    margin-top: 20rpx;
+    max-height: 620rpx;
+    padding: 24rpx;
+    background: #F8F3ED;
+    border-radius: 16rpx;
+}
+
+.raw-text {
+    font-size: 24rpx;
+    color: #5C534B;
+    line-height: 1.7;
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+.gen-btn {
+    width: 260rpx;
+}
+
+/* M12 营养行：模型粗估，明确标「约」，不写成营养标签那样的确定值 */
+.nutrition-line {
+    margin-top: 8rpx;
+    padding: 12rpx 16rpx;
+    border-radius: 12rpx;
+    background: var(--primary-soft);
+}
+
+.nutrition-main {
+    font-size: 26rpx;
+    color: var(--primary-dark);
+    font-weight: 600;
+}
+
+.nutrition-sub {
+    display: block;
+    margin-top: 4rpx;
+    font-size: 22rpx;
+    color: var(--muted);
+}

@@ -1,0 +1,94 @@
+<view class="page">
+    <view class="center-box" wx:if="{{authState === 'checking'}}">
+        <view class="skeleton loading-line"></view>
+    </view>
+
+    <block wx:if="{{authState === 'ready'}}">
+        <view class="hero">
+            <view class="row-between">
+                <view>
+                    <view class="hero-title">{{spaceName}}</view>
+                    <view class="hero-sub">{{members.length}} 个人 · 一起用这个冰箱</view>
+                </view>
+                <view class="hero-icon">🏡</view>
+            </view>
+        </view>
+
+        <view class="error-box" wx:if="{{error}}">{{error}}</view>
+
+        <view class="card section-card">
+            <view class="list-item" bindtap="onGoNotice">
+                <view class="avatar">🔔</view>
+                <view class="grow">
+                    <view class="item-name">消息中心</view>
+                    <view class="item-note">食材临期、TA 的动静都在这里</view>
+                </view>
+                <text class="tag tag-soft" wx:if="{{unreadCount > 0}}">{{unreadCount}} 条未读</text>
+                <text class="link" wx:else>去看看 ›</text>
+            </view>
+            <view class="list-item" bindtap="onGoNotifySetting">
+                <view class="avatar">⏰</view>
+                <view class="grow">
+                    <view class="item-name">提醒设置</view>
+                    <view class="item-note">微信提醒、提醒时间</view>
+                </view>
+                <text class="link">设置 ›</text>
+            </view>
+            <view class="list-item" bindtap="onGoModelSetting">
+                <view class="avatar">🧠</view>
+                <view class="grow">
+                    <view class="item-name">大模型</view>
+                    <view class="item-note">识图、保质期、菜谱用的模型</view>
+                </view>
+                <text class="link">设置 ›</text>
+            </view>
+            <view class="list-item" bindtap="onGoConsumption">
+                <view class="avatar">🧾</view>
+                <view class="grow">
+                    <view class="item-name">消耗记录</view>
+                    <view class="item-note">做过哪些菜、用掉了哪些食材</view>
+                </view>
+                <text class="link">看看 ›</text>
+            </view>
+            <view class="list-item" bindtap="onGoNutrition">
+                <view class="avatar">📊</view>
+                <view class="grow">
+                    <view class="item-name">营养统计</view>
+                    <view class="item-note">每天大约吃了多少、三大营养素</view>
+                </view>
+                <text class="link">看看 ›</text>
+            </view>
+        </view>
+
+        <view class="card section-card">
+            <view class="section-label">邀请码</view>
+            <view class="row-between code-row">
+                <text class="invite-code">{{inviteCode}}</text>
+                <view class="btn btn-soft btn-small" bindtap="onCopyCode">复制</view>
+            </view>
+            <view class="sub code-tip">把这个码发给 TA，TA 在绑定页输入就能进同一个家。一个家只能两个人。</view>
+        </view>
+
+        <view class="card">
+            <view class="section-label">成员</view>
+            <view class="list-item" wx:for="{{members}}" wx:key="label">
+                <view class="avatar">{{item.isMe ? '我' : 'TA'}}</view>
+                <view class="grow">
+                    <view class="item-name">{{item.label}}</view>
+                    <view class="item-note">{{item.joined}}加入</view>
+                </view>
+            </view>
+        </view>
+
+        <view class="card">
+            <view class="section-label">当前账号</view>
+            <view class="account-line">{{meLabel}}</view>
+        </view>
+
+        <view class="signout" bindtap="onSignOut">
+            {{signingOut ? '正在退出…' : '退出登录'}}
+        </view>
+
+        <view class="footer-note">数据存在云端，两个人看到的是同一份。下拉可以刷新。</view>
+    </block>
+</view>

@@ -1,0 +1,50 @@
+<!-- 全屏烹饪模式：自绘返回键（navigationStyle: custom），一次只看一步。 -->
+<view class="screen" style="padding-top: {{statusBarHeight}}px;">
+    <view class="nav">
+        <view class="back" bindtap="onBack">‹</view>
+        <view class="nav-title">{{title}}</view>
+        <view class="nav-space"></view>
+    </view>
+
+    <view class="center-box" wx:if="{{authState === 'checking'}}">
+        <view class="skeleton loading-line"></view>
+    </view>
+
+    <!-- 空态：没有做法 / 菜谱没了。给返回按钮，别把人困在这一页。 -->
+    <view class="empty" wx:if="{{authState === 'ready' && error}}">
+        <view class="empty-text">{{error}}</view>
+        <view class="btn btn-soft" bindtap="onBack">返回</view>
+    </view>
+
+    <block wx:if="{{authState === 'ready' && !error}}">
+        <view class="progress">
+            <view class="progress-track">
+                <view class="progress-fill" style="width: {{(index + 1) / total * 100}}%;"></view>
+            </view>
+            <view class="progress-text">第 {{index + 1}} / {{total}} 步</view>
+        </view>
+
+        <scroll-view class="step-area" scroll-y>
+            <view class="step-text">{{currentText}}</view>
+        </scroll-view>
+
+        <!-- 计时器：没识别出时长时 duration 为 0，按钮变成「开始 5 分钟」 -->
+        <view class="timer {{finished ? 'is-done' : ''}}">
+            <view class="clock">{{clock}}</view>
+            <view class="timer-actions">
+                <view class="timer-btn" bindtap="onResetTimer">重置</view>
+                <view class="timer-btn timer-main" bindtap="onToggleTimer">
+                    {{running ? '暂停' : (duration > 0 ? '开始' : '开始 5 分钟')}}
+                </view>
+                <view class="timer-btn" bindtap="onBumpDuration">+1 分</view>
+            </view>
+        </view>
+
+        <view class="actions">
+            <view class="btn-step btn-prev {{index === 0 ? 'is-disabled' : ''}}" bindtap="onPrev">上一步</view>
+            <view class="btn-step btn-next {{isLast ? 'is-last' : ''}}" bindtap="onNext">
+                {{isLast ? '做好了' : '下一步'}}
+            </view>
+        </view>
+    </block>
+</view>

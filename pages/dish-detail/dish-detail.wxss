@@ -1,0 +1,240 @@
+.loading-line {
+    width: 100%;
+}
+
+.title-line {
+    display: flex;
+    align-items: center;
+}
+
+.detail-title {
+    font-size: 38rpx;
+    font-weight: 600;
+    margin-right: 16rpx;
+}
+
+.detail-meta {
+    margin-top: 14rpx;
+    font-size: 24rpx;
+    color: #B3A79B;
+}
+
+.dot {
+    margin: 0 10rpx;
+}
+
+.note-box {
+    margin-top: 18rpx;
+    padding: 16rpx 20rpx;
+    border-radius: 16rpx;
+    background: #FBF5EF;
+    font-size: 26rpx;
+    color: #8C7060;
+}
+
+.sub-title {
+    margin-bottom: 8rpx;
+    font-size: 24rpx;
+    color: var(--muted);
+    letter-spacing: 1rpx;
+}
+
+.used-item {
+    display: flex;
+    align-items: center;
+    padding: 12rpx 0;
+}
+
+.used-name {
+    font-size: 28rpx;
+    flex: 0 0 auto;
+    max-width: 320rpx;
+}
+
+.used-amount {
+    margin-left: 12rpx;
+    font-size: 24rpx;
+    color: var(--muted);
+    flex: 1;
+}
+
+.step {
+    display: flex;
+    align-items: flex-start;
+    padding: 12rpx 0;
+}
+
+.step-index {
+    width: 40rpx;
+    height: 40rpx;
+    border-radius: 20rpx;
+    background: var(--primary-soft);
+    color: var(--primary-dark);
+    font-size: 22rpx;
+    text-align: center;
+    line-height: 40rpx;
+    flex: 0 0 auto;
+    margin-right: 16rpx;
+    margin-top: 4rpx;
+}
+
+.step-text {
+    flex: 1;
+    font-size: 29rpx;
+    line-height: 1.65;
+}
+
+.cart-btn {
+    margin-top: 20rpx;
+    width: 100%;
+}
+
+.gen-tip {
+    margin-top: 14rpx;
+}
+
+.recipe-note {
+    margin-top: 14rpx;
+    font-size: 24rpx;
+    color: #B3A79B;
+}
+
+.inline-link {
+    margin-left: 8rpx;
+}
+
+.cart-msg {
+    margin-top: 14rpx;
+    font-size: 24rpx;
+    color: var(--primary-dark);
+}
+
+.open-recipe {
+    margin-top: 14rpx;
+    text-align: right;
+}
+
+.link-row {
+    margin-top: 28rpx;
+    text-align: center;
+}
+
+.dish-link {
+    font-size: 26rpx;
+    color: var(--muted);
+    padding: 14rpx;
+}
+
+.dish-link.danger {
+    color: #C0392B;
+}
+
+/* ---------- N9 消耗确认弹层 ---------- */
+
+.cook-mask {
+    position: fixed;
+    inset: 0;
+    background: rgba(46, 42, 38, 0.45);
+    z-index: 100;
+    display: flex;
+    align-items: flex-end;
+}
+
+.cook-sheet {
+    width: 100%;
+    max-height: 80vh;
+    background: #FFFFFF;
+    border-radius: 28rpx 28rpx 0 0;
+    padding: 24rpx 28rpx calc(28rpx + env(safe-area-inset-bottom));
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.cook-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.cook-title {
+    font-size: 32rpx;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.cook-close {
+    width: 56rpx;
+    height: 56rpx;
+    line-height: 52rpx;
+    text-align: center;
+    font-size: 40rpx;
+    color: var(--muted);
+}
+
+.cook-hint {
+    margin: 12rpx 0 16rpx;
+    font-size: 24rpx;
+    color: var(--muted);
+}
+
+.cook-row {
+    display: flex;
+    align-items: center;
+    gap: 20rpx;
+    padding: 20rpx 0;
+    border-bottom: 2rpx solid var(--line);
+}
+
+.cook-row:last-of-type {
+    border-bottom: none;
+}
+
+.cook-check {
+    width: 40rpx;
+    height: 40rpx;
+    flex: 0 0 40rpx;
+    border-radius: 10rpx;
+    border: 2rpx solid #D8CEC4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24rpx;
+    color: #FFFFFF;
+}
+
+.cook-check.is-on {
+    background: var(--primary);
+    border-color: var(--primary);
+}
+
+.cook-check.is-disabled {
+    opacity: 0.35;
+}
+
+.cook-name {
+    font-size: 28rpx;
+    color: var(--text);
+}
+
+.cook-name.is-checked {
+    color: var(--muted);
+    text-decoration: line-through;
+}
+
+.cook-note {
+    margin-top: 4rpx;
+    font-size: 22rpx;
+    color: var(--muted);
+}
+
+.cook-actions {
+    margin-top: 24rpx;
+    display: flex;
+    gap: 16rpx;
+}
+
+/* M11：做法卡片底部的全屏烹饪入口 */
+.start-cook {
+    margin-top: 20rpx;
+}

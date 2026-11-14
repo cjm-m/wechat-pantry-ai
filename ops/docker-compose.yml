@@ -1,0 +1,112 @@
+# 我们的小家 · 自建后端栈（pg + postgrest + gateway）
+#
+# 密钥不进仓库，放在服务器的 /root/cloud-secrets.env（600）：
+#   CLOUD_JWT_SECRET / CLOUD_PUBLISHABLE_KEY / PG_AUTH_PASS / NEWAPI_KEY / LLM_TOKEN_SECRET / WX_SECRET
+# 非密钥运行参数在 /root/cloud/app.env（由 step5-compose.sh 从现网容器导出）：
+#   NEWAPI_BASE / NEWAPI_MODELS / LLM_PORT=8788 / PGRST_URL 等
+#
+# 起停：
+#   docker compose --env-file /root/cloud-secrets.env -f /root/cloud/docker-compose.yml up -d
+#   docker compose -f /root/cloud/docker-compose.yml ps
+#   docker compose -f /root/cloud/docker-compose.yml logs -f --tail 50
+#
+# 三个容器保持独立进程（不是一个容器塞三个服务）：
+#   pg     以 999:999 跑、要 PID 1 收信号做快速关库
+#   pgrst  独立二进制，升级只 restart 它
+#   llm-proxy  网关占 8787，原 AI 中转被 require 进同一进程跑 8788（已合并）
+name: pantry
+
+services:
+  pg:
+    image: postgres:16-alpine
+    container_name: pg
+    restart: always
+    user: "999:999"
+    mem_limit: 320m
+    memswap_limit: 448m
+    cap_drop: [ALL]
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      POSTGRES_PASSWORD: ${PG_AUTH_PASS:?PG_AUTH_PASS 未设置}
+      POSTGRES_INITDB_ARGS: "--data-checksums"
+    command:
+      - postgres
+      - -c
+      - shared_buffers=32MB
+      - -c
+      - max_connections=20
+      - -c
+      - work_mem=1MB
+      - -c
+      - maintenance_work_mem=16MB
+      - -c
+      - effective_cache_size=96MB
+      - -c
+      - timezone=UTC
+      - -c
+      - log_min_duration_statement=2000
+    volumes:
+      - /root/pg/data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -q"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 20s
+    networks: [data]
+
+  pgrst:
+    image: postgrest/postgrest:latest
+    container_name: pgrst
+    restart: always
+    user: "1000"
+    mem_limit: 96m
+    memswap_limit: 128m
+    cap_drop: [ALL]
+    security_opt:
+      - no-new-privileges:true
+    depends_on:
+      pg:
+        condition: service_healthy
+    environment:
+      PGRST_DB_URI: postgres://authenticator:${PG_AUTH_PASS:?}@pg:5432/postgres
+      PGRST_DB_SCHEMAS: public
+      PGRST_DB_ANON_ROLE: anon
+      PGRST_JWT_SECRET: ${CLOUD_JWT_SECRET:?CLOUD_JWT_SECRET 未设置}
+      PGRST_SERVER_PORT: "3000"
+      PGRST_LOG_LEVEL: info
+    networks: [data]
+
+  llm-proxy:
+    image: node:22-alpine
+    container_name: llm-proxy
+    restart: always
+    user: "1000:1000"
+    mem_limit: 192m
+    memswap_limit: 320m
+    cap_drop: [ALL]
+    security_opt:
+      - no-new-privileges:true
+    depends_on:
+      pgrst:
+        condition: service_started
+    env_file:
+      - /root/cloud/app.env
+    environment:
+      NEWAPI_KEY: ${NEWAPI_KEY:?NEWAPI_KEY 未设置}
+      LLM_TOKEN_SECRET: ${LLM_TOKEN_SECRET:?LLM_TOKEN_SECRET 未设置}
+      WX_SECRET: ${WX_SECRET:?WX_SECRET 未设置}
+      CLOUD_JWT_SECRET: ${CLOUD_JWT_SECRET:?CLOUD_JWT_SECRET 未设置}
+      CLOUD_PUBLISHABLE_KEY: ${CLOUD_PUBLISHABLE_KEY:?CLOUD_PUBLISHABLE_KEY 未设置}
+    command: ["node", "/app/cloud-gateway.js"]
+    volumes:
+      - /root/llm-proxy/llm-proxy.js:/app/llm-proxy.js:ro
+      - /root/llm-proxy/prompts.js:/app/prompts.js:ro
+      - /root/llm-proxy/cloud-gateway.js:/app/cloud-gateway.js:ro
+    networks: [data]
+
+networks:
+  data:
+    external: true
+    name: app_net

@@ -1,0 +1,59 @@
+<view class="page">
+    <view class="center-box" wx:if="{{authState === 'checking'}}">
+        <view class="skeleton loading-line"></view>
+    </view>
+
+    <block wx:if="{{authState === 'ready'}}">
+        <view class="hero">
+            <view class="hero-title">大模型</view>
+            <view class="hero-sub">识图、保质期、菜谱用哪几个模型，自己挑</view>
+        </view>
+
+        <view class="error-box" wx:if="{{error}}">{{error}}</view>
+        <view class="btn btn-ghost retry-btn" wx:if="{{error}}" bindtap="onRetry">重新读取</view>
+
+        <view class="card status-card" wx:if="{{totalCount > 0}}">
+            <view class="row-between">
+                <view class="grow">
+                    <view class="item-name">深度思考</view>
+                    <view class="item-note">{{allThinkingOff ? '两类模型的思考开关全部关闭' : '有模型打开了深度思考'}}</view>
+                </view>
+                <text class="tag {{allThinkingOff ? 'tag-ok' : 'tag-warn'}}">{{allThinkingOff ? '全部关闭' : '部分开启'}}</text>
+            </view>
+            <view class="divider"></view>
+            <view class="policy-note">识图、保质期、菜谱都只认结构化 JSON。开着深度思考，首字会从 1.5 秒拖到十几秒，推理段还可能把 JSON 尾部挤断，所以统一固定关闭，这一页不提供开启入口。</view>
+        </view>
+
+        <block wx:for="{{groups}}" wx:key="key">
+            <view class="card">
+                <view class="row-between group-head">
+                    <view class="grow">
+                        <view class="title group-title">{{item.title}}</view>
+                        <view class="item-note">{{item.note}}</view>
+                    </view>
+                    <text class="tag tag-quiet">{{item.models.length}} 个</text>
+                </view>
+
+                <view class="list-item model-item" wx:for="{{item.models}}" wx:for-item="model" wx:key="id"
+                      data-kind="{{item.key}}" data-id="{{model.id}}" bindtap="onPickModel">
+                    <view class="grow">
+                        <view class="item-name model-name {{model.selected ? 'is-checked' : ''}}">{{model.name}}</view>
+                        <view class="model-meta">
+                            <text class="tag {{model.tagClass}}">{{model.tag}}</text>
+                            <text class="tag {{model.thinkingClass}}">{{model.thinkingText}}</text>
+                        </view>
+                    </view>
+                    <view class="pick-switch {{model.selected ? 'pick-switch-on' : ''}}">
+                        <view class="pick-knob"></view>
+                    </view>
+                </view>
+
+                <view class="empty-line" wx:if="{{item.models.length === 0}}">{{item.empty}}</view>
+            </view>
+        </block>
+
+        <view class="hint-box">选择只存在本机，两人各用各的。列表顺序就是服务端的兜底顺序；列表里没有的模型，选了也不会生效。</view>
+
+        <view class="footer-note">深度思考是服务端策略（LLM_DEEP_THINKING），默认关闭。这里不做成可点的开关，是为了避免「点了也不会变」的假开关。</view>
+    </block>
+</view>

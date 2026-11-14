@@ -1,0 +1,128 @@
+.hero-icon {
+    font-size: 60rpx;
+    line-height: 1;
+}
+
+.group-card {
+    padding: 4rpx 28rpx;
+}
+
+/* 行分隔线放在滑动容器上：每行独立成块，分隔线不跟着内容横移。 */
+.swipe-item + .swipe-item {
+    border-top: 2rpx solid var(--line);
+}
+
+/* 整行可点后给一点被勾选的底色，滑动时也随内容移动 */
+.list-item.is-checked {
+    background: #FFFAF6;
+}
+
+.loading-line {
+    width: 100%;
+    margin-top: 28rpx;
+}
+
+.loading-line.short {
+    width: 60%;
+}
+
+.tip-line {
+    margin-top: 36rpx;
+    text-align: center;
+    font-size: 24rpx;
+    color: var(--muted);
+}
+
+.go-cook {
+    width: 240rpx;
+}
+
+.empty-btn {
+    margin: 32rpx auto 0;
+    width: 260rpx;
+}
+
+.item-tags {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 8rpx;
+}
+
+.item-tags .tag {
+    margin-right: 10rpx;
+    margin-bottom: 4rpx;
+}
+
+.fab-stack {
+    position: fixed;
+    right: 36rpx;
+    bottom: 200rpx;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.fab-stack .fab {
+    position: static;
+    margin-top: 20rpx;
+}
+
+.fab-scan {
+    background: #FFFFFF;
+    color: var(--primary);
+    font-size: 44rpx;
+    box-shadow: 0 8rpx 24rpx rgba(120, 92, 70, 0.16);
+}
+
+/* ---------- AI 补保质期 ---------- */
+
+.ai-pill {
+    margin-top: 20rpx;
+    padding: 16rpx 20rpx;
+    border-radius: 16rpx;
+    background: rgba(255, 255, 255, 0.78);
+    border: 2rpx solid rgba(228, 105, 59, 0.2);
+    font-size: 25rpx;
+    color: var(--primary-dark);
+}
+
+.ai-pill.is-busy {
+    color: var(--muted);
+    border-color: var(--line);
+}
+
+/* ---------- 冷藏 / 冷冻板块 ---------- */
+
+.area {
+    margin-top: 36rpx;
+}
+
+.area-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding: 0 8rpx 10rpx;
+}
+
+.area-name {
+    font-size: 32rpx;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.area-count {
+    font-size: 24rpx;
+    color: var(--muted);
+}
+
+.area .section {
+    margin-top: 16rpx;
+}
+
+.area-empty {
+    padding: 30rpx 8rpx;
+    border-radius: 20rpx;
+    border: 2rpx dashed var(--line);
+    text-align: center;
+}

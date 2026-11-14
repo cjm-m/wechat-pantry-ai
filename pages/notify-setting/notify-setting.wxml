@@ -1,0 +1,52 @@
+<view class="page">
+    <view class="center-box" wx:if="{{authState === 'checking'}}">
+        <view class="skeleton loading-line"></view>
+    </view>
+
+    <block wx:if="{{authState === 'ready'}}">
+        <view class="error-box" wx:if="{{error}}">{{error}}</view>
+
+        <view class="card">
+            <view class="row-between setting-row">
+                <view class="grow">
+                    <view class="item-name">微信提醒</view>
+                    <view class="item-note">{{canReceive ? '离开小程序也能收到' : '当前账号收不到'}}</view>
+                </view>
+                <switch checked="{{enabled}}" color="#E4693B" disabled="{{!canReceive}}" bindchange="onToggle" />
+            </view>
+
+            <block wx:if="{{canReceive}}">
+                <view class="divider"></view>
+                <view class="row-between setting-row">
+                    <view class="grow">
+                        <view class="item-name">提醒时间</view>
+                        <view class="item-note">每天到这个点检查一次</view>
+                    </view>
+                    <picker mode="time" value="{{remindAt}}" bindchange="onPickTime">
+                        <view class="time-value">{{remindAt}} ›</view>
+                    </picker>
+                </view>
+            </block>
+        </view>
+
+        <view class="hint-box" wx:if="{{!canReceive}}">
+            这个账号是用邮箱验证码登录的，没有微信身份，收不到微信提醒。退出后用"微信登录"进来一次，就能开启。
+        </view>
+
+        <view class="hint-box" wx:if="{{canReceive && !hasTemplate}}">
+            订阅消息模板还没配置，现在开启会提示"未配置"。等模板 ID 填进 <text class="mono-inline">utils/subscribe.js</text> 才会真正生效。
+        </view>
+
+        <view class="card subscribe-card" wx:if="{{canReceive && hasTemplate}}">
+            <view class="item-name">攒下发额度</view>
+            <view class="item-note quota-note">微信规定「一次授权 = 一条消息」。这里会同时请求「食材临期」和「点菜」两个模板，每个各攒一条额度。授权时勾选"总是保持以上选择"，之后就不再弹窗。</view>
+            <view class="btn btn-primary enable-btn" bindtap="onEnableWechat">{{requesting ? '正在请求…' : '开启微信提醒'}}</view>
+        </view>
+
+        <view class="hint-box" wx:if="{{needSetting}}">
+            你在微信设置里关掉了订阅消息，只能手动打开。<text class="link" bindtap="onOpenSetting">去设置 ›</text>
+        </view>
+
+        <view class="footer-note">站内消息不受这里影响：只要打开小程序，临期食材和点菜动态一定在「消息」里。</view>
+    </block>
+</view>

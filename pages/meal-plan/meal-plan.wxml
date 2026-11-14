@@ -1,0 +1,260 @@
+<view class="page page-with-bar">
+    <view class="center-box" wx:if="{{authState === 'checking'}}">
+        <view class="skeleton loading-line"></view>
+    </view>
+
+    <block wx:if="{{authState === 'ready'}}">
+        <!-- 周导航 -->
+        <view class="card week-card">
+            <view class="row-between">
+                <text class="week-arrow {{weekOffset <= 0 ? 'is-off' : ''}}" bindtap="onPrevWeek">‹</text>
+                <view class="week-center" bindtap="onThisWeek">
+                    <view class="week-title">{{weekOffset === 0 ? '本周' : (weekOffset === 1 ? '下周' : '再下一周')}}</view>
+                    <view class="week-sub">{{weekLabel}}</view>
+                </view>
+                <text class="week-arrow {{weekOffset >= 3 ? 'is-off' : ''}}" bindtap="onNextWeek">›</text>
+            </view>
+            <view class="week-stat" wx:if="{{itemCount > 0}}">
+                已排 {{itemCount}} 道 · 做了 {{cookedCount}} 道
+            </view>
+        </view>
+
+        <view class="error-box" wx:if="{{error}}">{{error}}</view>
+
+        <view class="center-box" wx:if="{{loading}}">
+            <view class="skeleton loading-line"></view>
+        </view>
+
+        <block wx:if="{{!loading && plan}}">
+            <!-- 7×3 网格 -->
+            <view class="card grid-card">
+                <view class="grid-head">
+                    <view class="grid-corner"></view>
+                    <view class="grid-day" wx:for="{{days}}" wx:key="offset">
+                        <view class="grid-day-label {{item.isToday ? 'is-today' : ''}}">{{item.label}}</view>
+                        <view class="grid-day-date">{{item.dateText}}</view>
+                    </view>
+                </view>
+
+                <view class="grid-row" wx:for="{{gridRows}}" wx:key="slot" wx:for-item="row">
+                    <view class="grid-slot">{{row.slotLabel}}</view>
+                    <view
+                        class="grid-cell"
+                        wx:for="{{row.cells}}"
+                        wx:for-item="cell"
+                        wx:key="dayOffset"
+                        data-day="{{cell.dayOffset}}"
+                        data-slot="{{cell.slot}}"
+                        bindtap="{{cell.item ? 'onTapItem' : 'onPickCell'}}"
+                        data-id="{{cell.item.id}}"
+                    >
+                        <block wx:if="{{cell.item}}">
+                            <view class="cell-dish {{cell.item.status === 'cooked' ? 'is-cooked' : ''}}">
+                                {{cell.item.title}}
+                            </view>
+                            <view class="cell-mark" wx:if="{{cell.item.status === 'cooked'}}">✓</view>
+                        </block>
+                        <view class="cell-plus" wx:else>+</view>
+                    </view>
+                </view>
+            </view>
+
+            <!-- 缺料 -->
+            <view class="card shortage-card" wx:if="{{plan.status !== 'drafted'}}">
+                <view class="row-between" bindtap="onToggleShortage">
+                    <view class="grow">
+                        <view class="sub">这周要买</view>
+                        <view class="shortage-title">
+                            <text wx:if="{{shortageMiss.length + shortageMaybe.length > 0}}">
+                                {{shortageMiss.length + shortageMaybe.length}} 样
+                            </text>
+                            <text wx:else class="shortage-ok">冰箱都够，不用买</text>
+                        </view>
+                    </view>
+                    <text class="link">{{shortageOpen ? '收起' : '展开'}} ›</text>
+                </view>
+
+                <block wx:if="{{shortageOpen}}">
+                    <view class="divider"></view>
+
+                    <view class="shortage-group" wx:if="{{shortageMiss.length > 0}}">
+                        <view class="shortage-label">缺</view>
+                        <view class="shortage-item" wx:for="{{shortageMiss}}" wx:key="name">
+                            <text class="shortage-name">{{item.name}}</text>
+                            <text class="shortage-amount" wx:if="{{item.amount}}">{{item.amount}}</text>
+                        </view>
+                    </view>
+
+                    <view class="shortage-group" wx:if="{{shortageMaybe.length > 0}}">
+                        <view class="shortage-label">可能不够</view>
+                        <view class="shortage-item maybe" wx:for="{{shortageMaybe}}" wx:key="name">
+                            <text class="shortage-name">{{item.name}}</text>
+                            <text class="shortage-amount" wx:if="{{item.amount}}">{{item.amount}}</text>
+                        </view>
+                    </view>
+
+                    <view class="shortage-actions">
+                        <view class="btn btn-soft btn-small" bindtap="onAddMissingToCart">
+                            缺的加进购物车
+                        </view>
+                        <view class="btn btn-ghost btn-small" bindtap="onRefreshShortage">刷新缺料</view>
+                    </view>
+                    <view class="shortage-note" wx:if="{{shortageMaybe.length > 0}}">
+                        「可能不够」的几样按名字对不上，自己看一眼再决定要不要买
+                    </view>
+                </block>
+            </view>
+
+            <!-- 状态提示 -->
+            <view class="hint-box" wx:if="{{plan.status === 'drafted' && itemCount > 0}}">
+                排完点下面的「就吃这些」，之后才会算缺料。
+            </view>
+            <view class="hint-box" wx:if="{{plan.status === 'confirmed'}}">
+                菜单已确认。做完一道点一下，冰箱会自动少掉用掉的食材。
+            </view>
+            <view class="hint-box" wx:if="{{plan.status === 'done'}}">
+                这周吃完了 🎉
+            </view>
+
+            <!-- 空态 -->
+            <view class="empty" wx:if="{{itemCount === 0}}">
+                <view class="empty-icon">📅</view>
+                <view class="empty-title">这周还没排菜</view>
+                <view class="empty-desc">点上面的格子，从收藏里挑、让 AI 推荐、或者自己写菜名</view>
+            </view>
+        </block>
+
+        <!-- 底部操作条 -->
+        <view class="bottom-bar" wx:if="{{authState === 'ready' && plan}}">
+            <view class="grow">
+                <text class="sub">{{itemCount}} 道</text>
+            </view>
+            <view
+                class="btn btn-primary btn-small {{confirming || plan.status !== 'drafted' ? 'is-disabled' : ''}}"
+                bindtap="{{plan.status === 'drafted' ? 'onConfirmPlan' : 'noop'}}"
+            >{{confirming ? '确认中…' : (plan.status === 'drafted' ? '就吃这些' : '已确认')}}</view>
+        </view>
+    </block>
+
+    <!-- ═══ 加菜弹层 ═══ -->
+    <view class="mask" wx:if="{{pickerOpen}}" bindtap="onClosePicker">
+        <view class="sheet" catchtap="noop">
+            <view class="sheet-head">
+                <text class="sheet-title">{{pickerTitle}}</text>
+                <text class="sheet-close" bindtap="onClosePicker">×</text>
+            </view>
+
+            <view class="tabs">
+                <view
+                    class="tab {{pickerTab === 'favorite' ? 'is-on' : ''}}"
+                    data-tab="favorite"
+                    bindtap="onSwitchTab"
+                >收藏</view>
+                <view
+                    class="tab {{pickerTab === 'ai' ? 'is-on' : ''}}"
+                    data-tab="ai"
+                    bindtap="onSwitchTab"
+                >AI 推荐</view>
+                <view
+                    class="tab {{pickerTab === 'manual' ? 'is-on' : ''}}"
+                    data-tab="manual"
+                    bindtap="onSwitchTab"
+                >手输</view>
+            </view>
+
+            <!-- 收藏 -->
+            <scroll-view scroll-y class="sheet-body" wx:if="{{pickerTab === 'favorite'}}">
+                <view class="pick-row" wx:for="{{favoriteList}}" wx:key="id">
+                    <view class="grow" data-id="{{item.id}}" bindtap="onPickFavorite">
+                        <view class="pick-title">{{item.title}}</view>
+                        <view class="pick-reason">{{item.reason}}</view>
+                    </view>
+                    <text class="pick-add" data-id="{{item.id}}" bindtap="onPickFavorite">加上</text>
+                </view>
+                <view class="empty" wx:if="{{favoriteList.length === 0}}">
+                    <view class="empty-desc">还没有收藏的菜谱，去配菜页收藏几道</view>
+                </view>
+            </scroll-view>
+
+            <!-- AI -->
+            <scroll-view scroll-y class="sheet-body" wx:if="{{pickerTab === 'ai'}}">
+                <view class="ai-hint" wx:if="{{aiDishes.length === 0 && !aiBusy}}">
+                    按冰箱里现有的食材生成 3 道
+                </view>
+                <view class="btn btn-soft ai-btn" bindtap="onGenerateAi" wx:if="{{!aiBusy}}">
+                    {{aiDishes.length === 0 ? '生成几道' : '换一批'}}
+                </view>
+                <view class="ai-loading" wx:if="{{aiBusy}}">
+                    <view class="skeleton ai-line"></view>
+                    <view class="skeleton ai-line short"></view>
+                </view>
+                <view class="error-box" wx:if="{{aiError}}">{{aiError}}</view>
+                <view class="pick-row" wx:for="{{aiDishes}}" wx:key="key" data-index="{{index}}" bindtap="onPickAi">
+                    <view class="grow">
+                        <view class="pick-title">{{item.title}}</view>
+                        <view class="pick-reason">{{item.summary}}</view>
+                    </view>
+                    <text class="pick-add">加上</text>
+                </view>
+            </scroll-view>
+
+            <!-- 手输 -->
+            <view class="sheet-body" wx:if="{{pickerTab === 'manual'}}">
+                <input
+                    class="field-input manual-input"
+                    value="{{manualTitle}}"
+                    placeholder="想吃什么？写个菜名"
+                    placeholder-class="placeholder"
+                    maxlength="40"
+                    bindinput="onManualInput"
+                />
+                <view class="error-box" wx:if="{{manualError}}">{{manualError}}</view>
+                <view class="manual-actions">
+                    <view class="btn btn-primary btn-small" bindtap="onManualAdd">
+                        {{saving ? '加上中…' : '直接加上'}}
+                    </view>
+                    <view class="btn btn-soft btn-small" bindtap="onManualFillIngredients">
+                        {{manualBusy ? '问 AI 中…' : '让 AI 补食材'}}
+                    </view>
+                </view>
+                <view class="manual-note">不补食材也能排上，只是算缺料时这道菜不算数</view>
+            </view>
+        </view>
+    </view>
+
+    <!-- ═══ 做完确认弹层 ═══ -->
+    <view class="mask" wx:if="{{cookOpen}}" bindtap="onCloseCook">
+        <view class="sheet" catchtap="noop">
+            <view class="sheet-head">
+                <text class="sheet-title">{{cookItem.title}}</text>
+                <text class="sheet-close" bindtap="onCloseCook">×</text>
+            </view>
+
+            <view class="cook-intro" wx:if="{{cookRows.length > 0}}">
+                用完的打个勾，冰箱里会删掉这一行
+            </view>
+
+            <view class="cook-row" wx:for="{{cookRows}}" wx:key="name" data-index="{{index}}" bindtap="onToggleCookRow">
+                <view class="check {{item.action === 'removed' && item.checkable ? 'check-on' : ''}} {{item.checkable ? '' : 'is-disabled'}}">
+                    <text wx:if="{{item.action === 'removed' && item.checkable}}">✓</text>
+                </view>
+                <view class="grow">
+                    <view class="cook-name {{item.action === 'removed' && item.checkable ? 'is-checked' : ''}}">{{item.name}}</view>
+                    <view class="cook-note" wx:if="{{!item.checkable}}">冰箱里没找到这一样</view>
+                    <view class="cook-note" wx:elif="{{item.amount}}">{{item.amount}}</view>
+                </view>
+            </view>
+
+            <view class="cook-empty" wx:if="{{cookRows.length === 0}}">
+                这道菜没有记录食材，做着吃就行，冰箱不动
+            </view>
+
+            <view class="cook-actions">
+                <view class="btn btn-ghost btn-small" bindtap="onRemoveItem">删掉这道菜</view>
+                <view class="btn btn-primary btn-small grow" bindtap="onConfirmCook">
+                    {{cooking ? '处理中…' : '做好了'}}
+                </view>
+            </view>
+        </view>
+    </view>
+</view>

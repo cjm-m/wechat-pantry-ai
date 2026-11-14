@@ -1,0 +1,38 @@
+.login-page {
+    padding-top: 80rpx;
+}
+
+.brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 56rpx;
+}
+
+.brand-mark {
+    font-size: 88rpx;
+    line-height: 1;
+}
+
+.brand-title {
+    margin-top: 24rpx;
+    font-size: 42rpx;
+    font-weight: 600;
+    letter-spacing: 2rpx;
+}
+
+.brand-sub {
+    margin-top: 10rpx;
+    font-size: 26rpx;
+    color: var(--muted);
+}
+
+.email-toggle {
+    padding: 8rpx 0;
+}
+
+.email-wrap {
+    margin-top: 12rpx;
+    padding-top: 12rpx;
+    border-top: 2rpx solid var(--line);
+}

@@ -1,0 +1,420 @@
+.scan-tip {
+    margin-top: 20rpx;
+    font-size: 24rpx;
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+.scan-tip.center {
+    text-align: center;
+}
+
+.manual-line {
+    margin-top: 28rpx;
+    text-align: center;
+    font-size: 26rpx;
+    color: var(--primary);
+}
+
+.result-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 8rpx 16rpx;
+}
+
+.scan-item {
+    background: var(--card);
+    border-radius: 24rpx;
+    padding: 24rpx 28rpx;
+    margin-bottom: 20rpx;
+    box-shadow: 0 4rpx 20rpx rgba(120, 92, 70, 0.05);
+}
+
+.scan-name {
+    flex: 1;
+    min-width: 0;
+    font-size: 32rpx;
+    font-weight: 500;
+}
+
+.scan-del {
+    width: 56rpx;
+    text-align: right;
+    color: #C6BBAF;
+    font-size: 36rpx;
+    line-height: 1;
+}
+
+.scan-fields {
+    margin-top: 18rpx;
+    padding-top: 18rpx;
+    border-top: 2rpx solid var(--line);
+}
+
+.scan-field {
+    display: flex;
+    align-items: center;
+    padding: 10rpx 0;
+}
+
+.scan-label {
+    width: 130rpx;
+    font-size: 24rpx;
+    color: var(--muted);
+    flex: 0 0 auto;
+}
+
+.scan-value {
+    font-size: 28rpx;
+    color: var(--text);
+}
+
+.scan-input {
+    width: 130rpx;
+    height: 60rpx;
+    line-height: 60rpx;
+    font-size: 28rpx;
+    padding: 0;
+    border-bottom: 2rpx solid var(--line);
+}
+
+.scan-input.unit {
+    width: 90rpx;
+    margin-left: 20rpx;
+}
+
+.store-chips {
+    display: flex;
+}
+
+.store-chip {
+    padding: 8rpx 26rpx;
+    margin-right: 14rpx;
+    border-radius: 12rpx;
+    border: 2rpx solid var(--line);
+    font-size: 26rpx;
+    color: var(--muted);
+}
+
+.store-chip-on {
+    background: var(--primary-soft);
+    border-color: #F6C7B2;
+    color: var(--primary-dark);
+}
+
+.none-link {
+    margin-left: 28rpx;
+    color: var(--muted);
+}
+
+.save-btn {
+    width: 190rpx;
+}
+
+.empty-btn {
+    margin: 32rpx auto 0;
+    width: 220rpx;
+}
+
+.line {
+    margin-top: 20rpx;
+}
+
+.line.short {
+    width: 72%;
+}
+
+.line.shorter {
+    width: 50%;
+}
+
+/* ---------- 批量拍摄 ---------- */
+
+.collect-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding: 8rpx 8rpx 16rpx;
+}
+
+.collect-count {
+    font-size: 30rpx;
+    font-weight: 600;
+}
+
+.collect-hint {
+    font-size: 22rpx;
+    color: var(--muted);
+}
+
+.shot-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.shot-cell {
+    position: relative;
+    width: 31.5%;
+    height: 190rpx;
+    margin-bottom: 20rpx;
+    border-radius: 16rpx;
+    overflow: hidden;
+    background: #EFE7DD;
+}
+
+.shot-thumb {
+    width: 100%;
+    height: 100%;
+}
+
+.shot-del {
+    position: absolute;
+    top: 6rpx;
+    right: 6rpx;
+    width: 40rpx;
+    height: 40rpx;
+    border-radius: 20rpx;
+    background: rgba(46, 42, 38, 0.55);
+    color: #FFFFFF;
+    font-size: 26rpx;
+    line-height: 40rpx;
+    text-align: center;
+}
+
+.shot-add {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 2rpx dashed #DED4C8;
+}
+
+.shot-add-icon {
+    font-size: 40rpx;
+    color: #C6BBAF;
+    line-height: 1;
+}
+
+.shot-add-text {
+    margin-top: 10rpx;
+    font-size: 22rpx;
+    color: var(--muted);
+}
+
+.add-more {
+    width: 180rpx;
+    margin-right: 12rpx;
+}
+
+.start-btn {
+    width: 200rpx;
+}
+
+/* ---------- 识别进度 ---------- */
+
+.prog-card {
+    margin-bottom: 20rpx;
+}
+
+.prog-bar {
+    margin-top: 18rpx;
+    height: 10rpx;
+    border-radius: 5rpx;
+    background: #F1E9E0;
+    overflow: hidden;
+}
+
+.prog-fill {
+    height: 100%;
+    background: var(--primary);
+    border-radius: 5rpx;
+    transition: width 0.3s ease;
+}
+
+.shot-status-card {
+    padding: 4rpx 28rpx;
+}
+
+.shot-status-row {
+    display: flex;
+    align-items: center;
+    padding: 20rpx 0;
+}
+
+.shot-status-row + .shot-status-row {
+    border-top: 2rpx solid var(--line);
+}
+
+.shot-mini {
+    width: 96rpx;
+    height: 96rpx;
+    border-radius: 12rpx;
+    margin-right: 18rpx;
+    flex: 0 0 auto;
+    background: #EFE7DD;
+}
+
+.shot-status-text {
+    font-size: 28rpx;
+    color: var(--text);
+}
+
+.shot-status-sub {
+    margin-top: 4rpx;
+    font-size: 22rpx;
+    color: #B33A2B;
+}
+
+/* ---------- 结果分组 ---------- */
+
+.summary-card {
+    margin-bottom: 8rpx;
+}
+
+.summary-links {
+    display: flex;
+    align-items: center;
+    margin-top: 14rpx;
+}
+
+.reset-link {
+    margin-left: 28rpx;
+    color: var(--muted);
+}
+
+.shot-block {
+    margin-top: 24rpx;
+}
+
+.shot-head {
+    display: flex;
+    align-items: center;
+    padding: 0 8rpx 12rpx;
+}
+
+.shot-title {
+    font-size: 28rpx;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.shot-sub {
+    display: block;
+    margin-top: 4rpx;
+    font-size: 22rpx;
+    color: var(--muted);
+}
+
+.shot-sub.failed {
+    color: #B33A2B;
+}
+
+/* ---------- 识别失败照片的补救 ---------- */
+
+.rescue-card {
+    margin-bottom: 20rpx;
+    padding: 22rpx 24rpx;
+    background: #FDF6F4;
+    border: 2rpx solid #F6D9D2;
+}
+
+.rescue-text {
+    font-size: 24rpx;
+    color: #B33A2B;
+    line-height: 1.6;
+}
+
+.rescue-actions {
+    display: flex;
+    align-items: center;
+    margin-top: 16rpx;
+}
+
+.rescue-preview {
+    margin-left: 24rpx;
+    color: var(--muted);
+}
+
+.rescue-actions .btn + .btn {
+    margin-left: 16rpx;
+}
+
+/* 重新识别：主操作；重认中按钮变灰禁用，min-width 防止文案切换时抖动 */
+.retry-btn {
+    min-width: 176rpx;
+}
+
+.rescue-skeleton {
+    margin-top: 16rpx;
+    width: 72%;
+}
+
+.add-one {
+    margin-top: 16rpx;
+    padding: 16rpx;
+    text-align: center;
+    font-size: 26rpx;
+    color: var(--primary);
+}
+
+/* ---------- 保质期状态 ---------- */
+
+.value-pending {
+    color: #C6BBAF;
+}
+
+.expire-note {
+    margin-top: 6rpx;
+    padding-left: 130rpx;
+    font-size: 22rpx;
+    color: var(--muted);
+}
+
+.est-btn {
+    width: 220rpx;
+    margin-right: 12rpx;
+}
+
+/* ---------- 估算遮罩 ---------- */
+
+.est-mask {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: rgba(46, 42, 38, 0.35);
+    z-index: 60;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.est-box {
+    width: 560rpx;
+    padding: 36rpx 32rpx;
+    border-radius: 24rpx;
+    background: #FFFFFF;
+}
+
+.est-title {
+    font-size: 30rpx;
+    font-weight: 600;
+}
+
+.est-line {
+    margin-top: 20rpx;
+}
+
+.est-line.short {
+    width: 60%;
+}
+
+.est-sub {
+    margin-top: 20rpx;
+    font-size: 22rpx;
+    color: var(--muted);
+}

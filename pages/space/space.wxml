@@ -1,0 +1,56 @@
+<view class="page space-page" wx:if="{{ready}}">
+    <view class="hero">
+        <view class="hero-title">两个人，一个冰箱</view>
+        <view class="hero-sub">先建一个家，或者用邀请码加入 TA 的家。</view>
+    </view>
+
+    <view class="error-box" wx:if="{{error}}">{{error}}</view>
+
+    <view class="card section-card">
+        <view class="title">建一个新的家</view>
+        <view class="sub card-sub">建好后会得到 6 位邀请码，发给 TA 就能一起用。</view>
+
+        <view class="field">
+            <view class="field-label">给家起个名字（可不填）</view>
+            <input
+                class="field-input"
+                placeholder="默认叫「我们的小家」"
+                placeholder-class="placeholder"
+                maxlength="12"
+                value="{{name}}"
+                bindinput="onNameInput"
+            />
+        </view>
+
+        <view class="btn btn-primary {{creating ? 'is-disabled' : ''}}" bindtap="onCreate">
+            {{creating ? '正在创建…' : '创建我的家'}}
+        </view>
+    </view>
+
+    <view class="or-line">
+        <view class="or-text">或者</view>
+    </view>
+
+    <view class="card section-card">
+        <view class="title">加入 TA 的家</view>
+        <view class="sub card-sub">让 TA 在「我的」页面念一遍邀请码给你。</view>
+
+        <view class="field">
+            <view class="field-label">6 位邀请码</view>
+            <input
+                class="field-input code-input"
+                placeholder="例如 7K3M9P"
+                placeholder-class="placeholder"
+                maxlength="6"
+                value="{{code}}"
+                bindinput="onCodeInput"
+            />
+        </view>
+
+        <view class="btn btn-soft {{joining ? 'is-disabled' : ''}}" bindtap="onJoin">
+            {{joining ? '正在加入…' : '加入这个家'}}
+        </view>
+    </view>
+
+    <view class="me-line">当前账号：{{meLabel}}</view>
+</view>

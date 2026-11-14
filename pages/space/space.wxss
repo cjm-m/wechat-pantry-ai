@@ -1,0 +1,57 @@
+.space-page {
+    padding-top: 40rpx;
+}
+
+.section-card {
+    margin-top: 28rpx;
+}
+
+.card-sub {
+    margin-top: 8rpx;
+    margin-bottom: 12rpx;
+}
+
+.code-input {
+    letter-spacing: 8rpx;
+    font-size: 40rpx;
+    font-weight: 600;
+}
+
+.or-line {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 36rpx 0 0;
+}
+
+.or-text {
+    font-size: 24rpx;
+    color: var(--muted);
+    padding: 0 20rpx;
+    position: relative;
+}
+
+.or-text::before,
+.or-text::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 60rpx;
+    height: 2rpx;
+    background: var(--line);
+}
+
+.or-text::before {
+    left: -60rpx;
+}
+
+.or-text::after {
+    right: -60rpx;
+}
+
+.me-line {
+    margin-top: 48rpx;
+    text-align: center;
+    font-size: 24rpx;
+    color: var(--muted);
+}

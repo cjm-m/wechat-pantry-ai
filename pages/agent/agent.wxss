@@ -1,0 +1,253 @@
+/* 家庭助手（M5）。对话气泡 + 步骤行 + 输入条。
+   全局样式在 app.wxss，这里只写本页特有的。 */
+
+/* ---------- 空态 ---------- */
+
+.intro {
+    padding: 80rpx 40rpx 40rpx;
+    text-align: center;
+}
+
+.intro-icon {
+    font-size: 88rpx;
+}
+
+.intro-title {
+    margin-top: 24rpx;
+    font-size: 36rpx;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.intro-desc {
+    margin-top: 12rpx;
+    font-size: 26rpx;
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+.suggest-card {
+    padding: 8rpx 24rpx;
+}
+
+.suggest-row {
+    display: flex;
+    align-items: center;
+    gap: 16rpx;
+    padding: 28rpx 0;
+    border-bottom: 2rpx solid var(--line);
+}
+
+.suggest-row:last-child {
+    border-bottom: none;
+}
+
+.suggest-text {
+    flex: 1;
+    font-size: 28rpx;
+    color: var(--text);
+}
+
+.suggest-arrow {
+    font-size: 32rpx;
+    color: #D8CEC4;
+}
+
+/* ---------- 对话 ---------- */
+
+.chat {
+    padding-bottom: 20rpx;
+}
+
+.msg {
+    margin-top: 28rpx;
+}
+
+/* 用户气泡靠右 */
+.bubble-user {
+    margin-left: auto;
+    max-width: 76%;
+    width: fit-content;
+    padding: 20rpx 26rpx;
+    border-radius: 20rpx 20rpx 6rpx 20rpx;
+    background: var(--primary);
+    color: #FFFFFF;
+    font-size: 28rpx;
+    line-height: 1.55;
+    word-break: break-word;
+}
+
+/* 助手气泡靠左，浅色底 */
+.bubble-agent {
+    margin-top: 12rpx;
+    max-width: 88%;
+    width: fit-content;
+    padding: 22rpx 26rpx;
+    border-radius: 20rpx 20rpx 20rpx 6rpx;
+    background: var(--card);
+    color: var(--text);
+    font-size: 28rpx;
+    line-height: 1.65;
+    white-space: pre-wrap;
+    word-break: break-word;
+    box-shadow: 0 2rpx 8rpx rgba(46, 42, 38, 0.05);
+}
+
+/* ---------- 步骤可视化 ---------- */
+
+.steps {
+    display: flex;
+    flex-direction: column;
+    gap: 8rpx;
+    margin-bottom: 10rpx;
+    padding-left: 6rpx;
+}
+
+.step-line {
+    display: flex;
+    align-items: center;
+    gap: 10rpx;
+    font-size: 22rpx;
+    color: var(--muted);
+}
+
+.step-icon {
+    width: 26rpx;
+    text-align: center;
+    color: var(--ok);
+    font-size: 22rpx;
+}
+
+.step-line.is-fail .step-icon {
+    color: #C0392B;
+}
+
+.step-line.is-fail .step-label {
+    color: #C0392B;
+}
+
+.step-label {
+    font-size: 22rpx;
+}
+
+.step-time {
+    font-size: 20rpx;
+    opacity: 0.65;
+}
+
+/* ---------- 截断提示 / 快捷入口 ---------- */
+
+.truncated-note {
+    margin-top: 12rpx;
+    padding: 14rpx 20rpx;
+    border-radius: 12rpx;
+    background: var(--warn-soft);
+    color: #8A5A14;
+    font-size: 22rpx;
+    line-height: 1.5;
+    width: fit-content;
+    max-width: 88%;
+}
+
+.quick-links {
+    margin-top: 12rpx;
+    display: flex;
+    gap: 24rpx;
+}
+
+.quick-link {
+    font-size: 24rpx;
+    color: var(--primary);
+}
+
+/* ---------- 思考中 ---------- */
+
+.thinking {
+    display: flex;
+    align-items: center;
+    gap: 10rpx;
+    padding: 20rpx 26rpx;
+    border-radius: 20rpx 20rpx 20rpx 6rpx;
+    background: var(--card);
+    width: fit-content;
+    box-shadow: 0 2rpx 8rpx rgba(46, 42, 38, 0.05);
+}
+
+.dot {
+    width: 12rpx;
+    height: 12rpx;
+    border-radius: 6rpx;
+    background: var(--primary);
+    opacity: 0.35;
+    animation: blink 1.2s infinite ease-in-out;
+}
+
+.dot:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.dot:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 0.25; transform: translateY(0); }
+    50% { opacity: 1; transform: translateY(-4rpx); }
+}
+
+.thinking-text {
+    margin-left: 6rpx;
+    font-size: 24rpx;
+    color: var(--muted);
+}
+
+/* ---------- 清空 ---------- */
+
+.clear-row {
+    padding: 32rpx 0 16rpx;
+    text-align: center;
+}
+
+.clear-link {
+    font-size: 24rpx;
+    color: var(--muted);
+}
+
+/* ---------- 输入条 ---------- */
+
+.agent-input {
+    flex: 1;
+    height: 76rpx;
+    line-height: 76rpx;
+    padding: 0 24rpx;
+    border-radius: 38rpx;
+    background: #F7F1EA;
+    font-size: 28rpx;
+}
+
+.send-btn {
+    flex: 0 0 auto;
+    padding: 0 32rpx;
+    height: 76rpx;
+    line-height: 76rpx;
+}
+
+/* degraded：有工具失败但模型仍给了回答。用琥珀色而不是红色 ——
+   红色会让用户以为整次都失败了，实际拿到的是部分结果。 */
+.degraded-note {
+    margin-top: 12rpx;
+    padding: 14rpx 20rpx;
+    border-radius: 12rpx;
+    background: #FDECEA;
+    color: #B33A2B;
+    font-size: 22rpx;
+    line-height: 1.5;
+    width: fit-content;
+    max-width: 88%;
+}
+
+/* 重试过的步骤加个小标记，方便排查「这次为什么慢」 */
+.step-retry {
+    font-size: 20rpx;
+    color: var(--warn);
+}

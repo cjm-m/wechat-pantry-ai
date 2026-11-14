@@ -1,0 +1,67 @@
+<view class="page page-with-bar">
+    <view class="center-box" wx:if="{{authState === 'checking'}}">
+        <view class="skeleton loading-line"></view>
+    </view>
+
+    <block wx:if="{{authState === 'ready'}}">
+        <view class="error-box" wx:if="{{error}}">{{error}}</view>
+
+        <view class="card">
+            <view class="field">
+                <view class="field-label">想吃什么</view>
+                <input
+                    class="field-input"
+                    value="{{title}}"
+                    placeholder="比如 番茄牛腩"
+                    placeholder-class="placeholder"
+                    maxlength="40"
+                    focus="{{!title}}"
+                    bindinput="onTitleInput"
+                />
+            </view>
+
+            <view class="field">
+                <view class="field-label">什么时候吃</view>
+                <picker mode="date" value="{{mealDate}}" start="{{today}}" bindchange="onDateChange">
+                    <view class="picker-value">{{dateLabel}}</view>
+                </picker>
+            </view>
+
+            <view class="field">
+                <view class="field-label">哪一餐</view>
+                <picker range="{{slotLabels}}" value="{{slotIndex}}" bindchange="onSlotChange">
+                    <view class="picker-value">{{slotLabels[slotIndex]}}</view>
+                </picker>
+            </view>
+
+            <view class="field">
+                <view class="field-label">想说的话（可选）</view>
+                <input
+                    class="field-input"
+                    value="{{note}}"
+                    placeholder="少放辣 / 今天有点累"
+                    placeholder-class="placeholder"
+                    maxlength="100"
+                    bindinput="onNoteInput"
+                />
+            </view>
+
+            <view class="field">
+                <view class="field-label">关联菜谱（可选，选了更准）</view>
+                <view class="picker-value" bindtap="onPickRecipe">
+                    <text wx:if="{{recipeTitle}}">{{recipeTitle}}</text>
+                    <text wx:else class="placeholder">从收藏里选一道，做的时候能看做法</text>
+                </view>
+            </view>
+        </view>
+
+        <view class="hint-box">点完 TA 在首页就能看到；进详情页会自动算出这道菜要买什么、冰箱里缺哪几样。</view>
+
+        <view class="bottom-bar">
+            <view
+                class="btn btn-primary grow {{submitting ? 'is-disabled' : ''}}"
+                bindtap="onSubmit"
+            >{{submitting ? '正在点…' : '就这个'}}</view>
+        </view>
+    </block>
+</view>

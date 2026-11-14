@@ -1,0 +1,186 @@
+/* 全屏烹饪模式（M11）。navigationStyle: custom，所以顶部间距自己算。
+   目标只有一个：手上有油、离手机半米，也能看清当前这一步。 */
+
+.screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg);
+    color: var(--text);
+}
+
+.nav {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    height: 88rpx;
+    padding: 0 24rpx;
+}
+
+.back {
+    width: 72rpx;
+    height: 72rpx;
+    line-height: 68rpx;
+    text-align: center;
+    font-size: 52rpx;
+    color: var(--text);
+}
+
+.nav-title {
+    flex: 1;
+    text-align: center;
+    font-size: 30rpx;
+    color: var(--text);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+/* 和 .back 等宽，标题才真正居中 */
+.nav-space {
+    width: 72rpx;
+    height: 72rpx;
+}
+
+.empty {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 32rpx;
+    padding: 0 60rpx;
+}
+
+.empty-text {
+    font-size: 30rpx;
+    color: var(--muted);
+    text-align: center;
+    line-height: 1.6;
+}
+
+.progress {
+    flex: 0 0 auto;
+    padding: 8rpx 48rpx 0;
+}
+
+.progress-track {
+    height: 8rpx;
+    border-radius: 4rpx;
+    background: var(--line);
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--primary);
+    transition: width 0.2s ease;
+}
+
+.progress-text {
+    margin-top: 12rpx;
+    text-align: center;
+    font-size: 24rpx;
+    color: var(--muted);
+}
+
+/* 步骤区吃掉所有剩余高度，步骤再长也不挤压下面按钮 */
+.step-area {
+    flex: 1;
+    min-height: 0;
+    padding: 32rpx 48rpx;
+}
+
+.step-text {
+    font-size: 56rpx;
+    line-height: 1.55;
+    font-weight: 500;
+    letter-spacing: 1rpx;
+}
+
+.timer {
+    flex: 0 0 auto;
+    padding: 0 48rpx 8rpx;
+    text-align: center;
+}
+
+.clock {
+    font-size: 72rpx;
+    font-weight: 600;
+    color: var(--primary);
+    letter-spacing: 2rpx;
+    font-variant-numeric: tabular-nums;
+}
+
+/* 归零后换个颜色，一眼能看出「结束了」而不是「还在跑」 */
+.timer.is-done .clock {
+    color: var(--ok);
+}
+
+.timer-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20rpx;
+    margin-top: 12rpx;
+}
+
+.timer-btn {
+    padding: 0 28rpx;
+    height: 72rpx;
+    line-height: 72rpx;
+    border-radius: 36rpx;
+    font-size: 26rpx;
+    color: var(--muted);
+    background: var(--card);
+    border: 2rpx solid var(--line);
+}
+
+.timer-main {
+    color: #FFFFFF;
+    background: var(--primary);
+    border-color: var(--primary);
+    min-width: 200rpx;
+}
+
+.actions {
+    flex: 0 0 auto;
+    display: flex;
+    gap: 20rpx;
+    padding: 20rpx 48rpx 48rpx;
+}
+
+.btn-step {
+    flex: 1;
+    height: 112rpx;
+    line-height: 112rpx;
+    text-align: center;
+    border-radius: 24rpx;
+    font-size: 34rpx;
+    font-weight: 500;
+}
+
+.btn-prev {
+    flex: 0 0 200rpx;
+    color: var(--text);
+    background: var(--card);
+    border: 2rpx solid var(--line);
+}
+
+.btn-prev.is-disabled {
+    color: var(--line);
+}
+
+.btn-next {
+    color: #FFFFFF;
+    background: var(--primary);
+}
+
+/* 最后一步是「做好了」，换成完成色，和「下一步」区分开 */
+.btn-next.is-last {
+    background: var(--ok);
+}

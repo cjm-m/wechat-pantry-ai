@@ -1,0 +1,70 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/login/login",
+    "pages/space/space",
+    "pages/home/home",
+    "pages/fridge/fridge",
+    "pages/cook/cook",
+    "pages/cart/cart",
+    "pages/favorites/favorites",
+    "pages/notice/notice",
+    "pages/notify-setting/notify-setting",
+    "pages/model-setting/model-setting",
+    "pages/me/me",
+    "pages/scan/scan",
+    "pages/ingredient-edit/ingredient-edit",
+    "pages/recipe-detail/recipe-detail",
+    "pages/dishes/dishes",
+    "pages/dish-edit/dish-edit",
+    "pages/dish-detail/dish-detail",
+    "pages/meal-plan/meal-plan",
+    "pages/consumption/consumption",
+    "pages/nutrition/nutrition",
+    "pages/cook-mode/cook-mode",
+    "pages/agent/agent"
+  ],
+  "window": {
+    "navigationBarTitleText": "我们的小家",
+    "navigationBarBackgroundColor": "#FBF7F2",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#FBF7F2",
+    "backgroundTextStyle": "dark"
+  },
+  "tabBar": {
+    "color": "#9A8F85",
+    "selectedColor": "#E4693B",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/home/home",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/fridge/fridge",
+        "text": "冰箱"
+      },
+      {
+        "pagePath": "pages/cook/cook",
+        "text": "配菜"
+      },
+      {
+        "pagePath": "pages/cart/cart",
+        "text": "购物车"
+      },
+      {
+        "pagePath": "pages/me/me",
+        "text": "我的"
+      }
+    ]
+  },
+  "style": "v2",
+  "networkTimeout": {
+    "request": 60000,
+    "uploadFile": 60000,
+    "downloadFile": 60000
+  },
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}
